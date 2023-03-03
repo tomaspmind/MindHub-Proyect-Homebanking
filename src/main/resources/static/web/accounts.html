@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="shortcut icon" href="./images/logo-mindhub.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <title>Panel Accounts</title>
+</head>
+<body>
+
+<!-- MODAL CALCULADORA -->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="calculator">
+                <div class="screen">0</div>
+                <div class="buttons">
+                  <div class="numbers">
+                    <button data-val="9">9</button>
+                    <button data-val="8">8</button>
+                    <button data-val="7">7</button>
+                    <button data-val="6">6</button>
+                    <button data-val="5">5</button>
+                    <button data-val="4">4</button>
+                    <button data-val="3">3</button>
+                    <button data-val="2">2</button>
+                    <button data-val="1">1</button>
+                    <button data-val="clear">C</button>
+                    <button data-val=".">.</button>
+                    <button data-val="0" href="0">0</button>
+                  </div>
+                  <div class="operators">
+                    <button data-val="÷">÷</button>
+                    <button data-val="x">x</button>
+                    <button data-val="-">-</button>
+                    <button data-val="+">+</button>
+                    <button data-val="=">=</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+<!-- MODAL CALENDARIO -->
+
+      <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog2">
+          <div class="modal-content modal-content2">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div>
+                <div id="calendar">
+                    <div id="calendar_header"><i class="icon-chevron-left"><i class="bi bi-chevron-left"></i></i>
+                      <h1></h1><i class="icon-chevron-right"><i class="bi bi-chevron-right"></i></i>
+                    </div>
+                    <div id="calendar_weekdays"></div>
+                    <div id="calendar_content"></div>
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <main id="app">
+        <div class="wrapper2">
+            <nav id="sidebar" class="sticky-top">
+            <div class="sidebar-header border-bottom border-dark logoImagen">
+                <img src="./images/logo-mindhub-sinfondo.png" alt="" style="height: 6.5rem; width: 6.5rem;">
+                <h3>Mindhub Bank</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <p class="border-bottom border-dark fs-4">Dashboard</p>
+                
+                <li>
+                    <button class="btn btn-danger" @click="CreateNewAccount" v-if="accounts.length < 3">Create Account</button>
+                </li>
+                <li >
+                    <a href="./cards.html"><i class="bi bi-credit-card"></i> Cards</a>
+                </li>
+                <li>
+                    <button class="btn custom-boton" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <i class="bi bi-cash-coin"></i> Loans
+                    </button>
+                    <div style="background-color: #6D0B0B;">
+                        <div class="collapse" id="collapseExample" v-for="loan of dataLoans" v-if="dataLoans.length > 0">
+                            <a href="#loans">{{loan.name}}</a>
+                        </div>
+                        <div class="collapse" id="collapseExample" v-else>
+                            <p>You have no Loans</p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                <a href="#"><i class="bi bi-currency-exchange"></i> Exchange</a>
+                </li>
+                <li>
+                <a href="#"><i class="bi bi-cash"></i> Debt payment</a>
+                </li>
+                <li>
+                <a href="#"><i class="bi bi-currency-bitcoin"></i>Cryptos</a>
+                </li>
+                <li>
+                <a href="#"><i class="bi bi-chat-square-text"></i> Notifications</a>
+                </li>
+                <li>
+                <a href="#"><i class="bi bi-mortarboard"></i> Information</a>
+                </li>
+            </ul>
+            <ul class="list-unstyled CTAs">
+                <li><a href="#" class="article" data-bs-toggle="modal" data-bs-target="#exampleModal3"><i class="bi bi-exclamation-triangle"></i> Reports</a></li>
+            </ul>
+
+<!-- MODAL REPORTES -->
+
+<div class="modal fade extras" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-reporte">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New Report</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <form>
+            <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name" disabled value="admin@mindhub.com">
+            </div>
+            <div class="mb-3">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+            </div>
+        </form>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send Report</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+            </nav>
+            <div id="content">
+            <nav class="navbar navbar-default sticky-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                            <i class="bi bi-text-left oculto"></i>
+                        <span><i class="bi bi-arrow-left-right"></i></span>
+                        </button>
+                    </div>
+                    <div class="d-flex gap-3">
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle nada" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{client.firstName}} {{client.lastName}} <i class="bi bi-person-fill"></i></a>
+                            <ul class="dropdown-menu nada">
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-person-fill"></i> User profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-person-vcard"></i> User information</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-shield-lock"></i> Segurity</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a @click="alertLogout" class="dropdown-item" href="#"><i class="bi bi-power"></i> Disconect</a></li>
+                            </ul>
+                        </div>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i style="color: black;" class="bi bi-calculator-fill"></i></a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i style="color: black;" class="bi bi-calendar3"></i></a>
+                        <a href="#"><i style="color: black;" class="bi bi-bell"></i></a>
+                    </div>
+                </div>
+            </nav>
+            <div class="card2 overlay">
+                <p class="fw-bold text-dark">Balance total: </p>
+                <p class="text-center fs-1 fw-bold text-dark"> {{totalBalance()}}</p>
+            </div>
+            <div class="line"></div>
+            <div class="cards2">
+                <div class="card2 text-dark overlay" v-for="account of accounts" v-if="accounts.length > 0">
+                    <p class="fw-bold text-dark">Balance: </p>
+                    <p class="text-center fs-2 fw-bold text-dark">{{account.balance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
+                    <div class="d-flex flex-column text-center">
+                        <p class="letra text-center border-top border-1 text-dark">Account: {{account.number}}</p>
+                        <div class="d-flex justify-content-evenly flex-column">
+                            <p class="letra text-center text-dark">{{parseDate(account.creationDate)}}</p>
+                            <a :href='"account.html?id="+account.id' style="color: white;" class="boton-inventado">Transactions</a>
+                        </div>
+                    </div>
+                </div>
+                <div v-else>
+                    <h2>You have no Accounts</h2>
+                </div>
+            </div>
+            <div class="line"></div>
+            <table class="text-dark container">
+                <thead>
+                    <tr>
+                        <th class="fw-semibold text-center border-1 border border-dark text-light p-2" colspan="12" style="background-color: #6D0B0B;">Last Transactions</th>
+                    </tr>
+                    <tr class="border-bottom border-1 border-dark" style="height: 40px;">
+                        <th class="desaparecer"><label for=""><input type="checkbox" onclick="marcar(this)"></label></th>
+                        <th class="fw-semibold letra-mas-chica" style="width: 3%;">Nº</th>
+                        <th class="fw-semibold letra-mas-chica">Day</th>
+                        <th class="fw-semibold letra-mas-chica">Type</th>
+                        <th class="fw-semibold letra-mas-chica">Description</th>
+                        <th class="fw-semibold letra-mas-chica">Amount</th>
+                        <th class="fw-semibold desaparecer">Hour</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="transaction of all_transactions.slice(0,4)" class="border-bottom border-1 tabla-hover" v-if="all_transactions.length > 0">
+                        <td class="desaparecer"><label><input type="checkbox" name={{transaction.id}}></label></td>
+                        <td>{{transaction.id}}</td>
+                        <td class=" letra-mas-chica">{{parseDate(transaction.date)}}</td>
+                        <td class=" d-flex flechas" v-if="transaction.type == 'CREDIT'"><p class="desaparecer" style="color: green;">{{transaction.type}}</p><p><i style="color: green;" class="bi bi-arrow-up"></i></p></td>
+                        <td class=" d-flex flechas" v-else><p class="desaparecer" style="color: red;">{{transaction.type}}</p><p><i style="color: red;" class="bi bi-arrow-down"></i></p></td>
+                        <td class=" letra-mas-chica">{{transaction.description}}</td>
+                        <td class=" ">{{transaction.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
+                        <td class=" desaparecer">{{justHour(transaction.date)}}</td>
+                    </tr>
+                    <tr v-else>
+                        <td colspan="7" class="text-center text-dark fw-bold fs-4"><br> You have no transactions</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="line"></div>
+            <table class="table">
+            <tr>
+                <th id="loans" class="fw-semibold text-center border-1 border border-dark text-light p-2" colspan="4" style="background-color: #6D0B0B;">Your Loans {{client.firstName}} {{client.lastName}}</th>
+            </tr>
+            <tr class="border-bottom border-1 border-dark" style="height: 40px;">
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Payments</th>
+                <!-- <th></th> -->
+            </tr>
+            <tr v-for="loan of dataLoans" v-if="dataLoans.length > 0">
+                <td>{{loan.name}}</td>
+                <td>$ {{loan.amount}}</td>
+                <td>{{loan.payments}}</td>
+                <!-- <td><button class="">Pay Now</button></td> -->
+            </tr>
+            <tr v-else>
+                <td class="fw-bold text-dark text-center fs-4" colspan="7"><br> You have no Loans</td>
+            </tr>
+            
+        </table>
+        <div class="line"></div>
+        
+            </div>
+        </div>
+    </main>
+
+
+
+    <script type="text/javascript">
+        function marcar(source) 
+        {
+          checkboxes=document.getElementsByTagName('input'); //obtenemos todos los controles del tipo Input
+          for(i=0;i<checkboxes.length;i++) //recoremos todos los controles
+          {
+            if(checkboxes[i].type == "checkbox") //solo si es un checkbox entramos
+            {
+              checkboxes[i].checked=source.checked; //si es un checkbox le damos el valor del checkbox que lo llamó (Marcar/Desmarcar Todos)
+            }
+          }
+        }
+      </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./JS/accounts.js"></script>
+</body>
+</html>

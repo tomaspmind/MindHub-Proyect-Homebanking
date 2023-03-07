@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.controllers;
 
+import antlr.StringUtils;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,17 +34,18 @@ public class TransactionController {
     @Autowired
     AccountRepository accountRepository;
 
+    @Transactional
     @RequestMapping(path = "/api/transactions", method = RequestMethod.POST)
     public ResponseEntity<Object> transactions(Authentication authentication,
 
-            @RequestParam Double amount, @RequestParam String description,
+            @RequestParam(required = false) Double amount, @RequestParam String description,
             @RequestParam String accountNumber , @RequestParam String accountNumberDestini) {
 
         Client clientAuthenticated = clientRepository.findByEmail(authentication.getName());
         Account originAccount = accountRepository.findByNumber(accountNumber);
         Account destinyAccount = accountRepository.findByNumber(accountNumberDestini);
 
-        if (amount.isNaN()){
+        if (amount == null){
             return new ResponseEntity<>("Amount is Empty",HttpStatus.BAD_REQUEST);
         }
         if (description.isEmpty()){
@@ -54,16 +57,16 @@ public class TransactionController {
         if (accountNumberDestini.isEmpty()){
             return new ResponseEntity<>("Account Destiny is Empty",HttpStatus.BAD_REQUEST);
         }
+        if (amount < 1){
+            return new ResponseEntity<>("You cannot transfer an amount less than 1",HttpStatus.FORBIDDEN);
+        }
         if (accountNumber == null){
             return new ResponseEntity<>("Account Number is not exist",HttpStatus.FORBIDDEN);
         }
         if (accountNumberDestini == null){
             return new ResponseEntity<>("Account Destiny is not exist",HttpStatus.FORBIDDEN);
         }
-        if (amount.equals(0)){
-            return new ResponseEntity<>("You have no money",HttpStatus.FORBIDDEN);
-        }
-        if (accountNumber == accountNumberDestini){
+        if (accountNumber.equals(accountNumberDestini)){
             return new ResponseEntity<>("The number Accounts is the same",HttpStatus.BAD_REQUEST);
         }
         if (!accountRepository.existsByNumber(accountNumber)){
@@ -76,7 +79,7 @@ public class TransactionController {
             return new ResponseEntity<>("The account destiny is does exist",HttpStatus.FORBIDDEN);
         }
         if (originAccount.getBalance() < amount){
-            return new ResponseEntity<>("Enough money for that",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("You dont have enough money for that",HttpStatus.BAD_REQUEST);
         }
 
         Transaction transactionOrigin = new Transaction(TransactionType.DEBIT, amount,description,LocalDateTime.now());

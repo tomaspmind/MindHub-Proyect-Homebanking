@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/loan-application.css">
+    <link rel="shortcut icon" href="./images/logo-mindhub.png" type="image/x-icon">
+
+    <title>Transfers - Mindhub Bank</title>
+</head>
+<body>
+    <main id="app">
+        <div class="container">
+          <div class="d-flex gap-3 align-items-center">
+            <h1 class="brand text-light">MindHub Bank</h1>
+            <img src="./images/logo-mindhub-sinfondo.png" alt="" style="height: 6.5rem; width: 6.5rem;">
+          </div>
+            <div class="wrapper animated bounceInLeft">
+              <div class="company-info">
+                <h4>Why you want to request a loan?</h4>
+                <p class="letraMasChica">
+                  It is important to make a careful evaluation of your income and expenses before applying for a loan and carefully read the advantages and disadvantages:</p>
+                <h5>Benefits:</h5>
+                <ul class="letraMasChica">
+                  <li class="d-flex text-start">Access to financing: A loan can provide the money you need to finance a project, buy a house, a car, or make a major investment.</li>
+                  <li class="d-flex text-start">Flexibility: Loans can be customized to suit your financial needs.</li>
+                  <li class="d-flex text-start">Improved credit history: If you pay the loan on time and according to the established terms, your credit history will improve.</li>
+                  <li class="d-flex text-start">Tax-deductible interest: If you are borrowing for an investment in your business, the interest may be tax-deductible.</li>
+                </ul>
+                <h5>Disadvantages:</h5>
+                <ul class="letraMasChica">
+                  <li class="d-flex text-start">Cost: Loans can be expensive due to interest, fees, and other associated charges.</li>
+                  <li class="d-flex text-start">Default risk: If you are unable to repay the loan according to the agreed terms, you may face negative consequences.</li>
+                  <li class="d-flex text-start">It can affect your cash flow: If you have to make monthly loan payments, it can affect your ability to pay other important bills and expenses.</li>
+                  <li class="d-flex text-start">It can be difficult to get out of debt: If you find yourself in a situation where you can't pay the loan.</li>
+                </ul>
+              </div>
+              <div class="contact d-flex flex-column justify-content-evenly">
+                <h3>You can request a loan here!</h3>
+                <div class="d-flex flex-column">
+                  <form @submit.prevent="loadAccounts">
+                  <div>
+                      <label for="tipoTransferencia">Loan Type:</label>
+                      <select id="tipoTransferencia" @change="changed" v-model="loanId">
+                        <option value="" disabled selected>Select Type</option>
+                        <option v-for="loan in loans" :value="loan.id">{{loan.name}}</option>
+                          
+                      </select>
+                  </div>
+                  <div class="d-flex gap-3 justify-content-between flex-wrap">
+                    <div class="d-flex gap-1">
+                      <label for="cuentaDestino" class="paddingSimple">Select Payment:</label>
+                      <select id="cuentaDestino" v-model="loanPayments" >
+                          <option value="" disabled selected>Select one payment</option>
+                          <option v-for="payment in payments" :value="payment" >{{ payment }}</option>
+                      </select>
+                    </div>
+                    <div class="d-flex gap-1">
+                      <label for="cuentaDestino2" class="paddingSimple">Destination account:</label>
+                      <select id="cuentaDestino2" v-model="loanAccount">
+                          <option value="" disabled selected>Select Account</option>
+                          <option v-for="account in accounts" :key="account" :value="account.number">{{ account.number }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div>
+                      <label for="monto">Amount:</label>
+                      <input type="number" id="monto" v-model="loanAmount" placeholder="Write the mount you want to transfer" min="0">
+                  </div>
+
+                  <div>
+                    <h4 v-if="loanAmount != null" class="text-center">You gonna pay {{paymentsForMonth()}} for month</h4>
+                  </div>
+                  
+                  <div class="d-flex gap-1">
+                      <button type="submit" @click="alertLoan">Click to register the loan</button>
+                      <button type="submit" @click="cleanForm">Clean Form</button>
+                  </div>
+                  <div>
+                    <a href="./accounts.html" class="boton-a">Back</a>
+                  </div>
+                  </form>
+              </div>
+              </div>
+            </div>
+          </div>
+    </main>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./JS/loan-application.js"></script>
+</body>
+</html>

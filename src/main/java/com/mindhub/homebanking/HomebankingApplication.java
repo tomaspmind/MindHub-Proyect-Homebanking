@@ -59,15 +59,15 @@ public class HomebankingApplication {
 			Loan loan2 = new Loan("Personal", 100000, List.of(6,12,24));
 			Loan loan3 = new Loan("Automotive", 300000, List.of(6,12,24,36));
 
-			ClientLoan clientLoan1 = new ClientLoan(400000, 60, melba, loan1);
-			ClientLoan clientLoan2 = new ClientLoan(50000,12,melba, loan2);
+			ClientLoan clientLoan1 = new ClientLoan(400000.0, 60, melba, loan1);
+			ClientLoan clientLoan2 = new ClientLoan(50000.0,12,melba, loan2);
 
-			ClientLoan clientLoan3 = new ClientLoan(100000,24,tomas,loan2);
-			ClientLoan clientLoan4 = new ClientLoan(200000, 36, tomas, loan3);
+			ClientLoan clientLoan3 = new ClientLoan(100000.0,24,tomas,loan2);
+			ClientLoan clientLoan4 = new ClientLoan(200000.0, 36, tomas, loan3);
 
 			Card card1 = new Card(melba.getFirstName()+" "+melba.getLastName(),CardType.DEBIT, CardColor.GOLD,numbers(),cvv(),nowOnlyDay,expirationDay);
 			Card card2 = new Card(melba.getFirstName()+" "+melba.getLastName(),CardType.CREDIT, CardColor.TITANIUM,numbers(),cvv(),nowOnlyDay,expirationDay);
-
+			Card card4 = new Card(melba.getFirstName()+" "+melba.getLastName(),CardType.CREDIT,CardColor.SILVER,numbers(),cvv(),LocalDate.now().minusYears(5),LocalDate.now());
 			Card card3 = new Card(tomas.getFirstName()+" "+tomas.getLastName(),CardType.CREDIT,CardColor.SILVER,numbers(),cvv(),nowOnlyDay,expirationDay);
 
 			melba.addAccount(account1);
@@ -90,6 +90,7 @@ public class HomebankingApplication {
 			card1.setClient(melba);
 			card2.setClient(melba);
 			card3.setClient(tomas);
+			card4.setClient(melba);
 
 			melba.addCard(card1);
 			melba.addCard(card2);
@@ -102,6 +103,7 @@ public class HomebankingApplication {
 
 			accountRepository.save(account1);
 			accountRepository.save(account2);
+			accountRepository.save(account4);
 
 			transactionRepository.save(transaction1);
 			transactionRepository.save(transaction2);
@@ -126,6 +128,7 @@ public class HomebankingApplication {
 			cardRepository.save(card1);
 			cardRepository.save(card2);
 			cardRepository.save(card3);
+			cardRepository.save(card4);
 
 		};
 	}

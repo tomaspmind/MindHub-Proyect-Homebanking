@@ -30,6 +30,7 @@ public class Transaction {
         this.date = date;
     }
 
+
     public Long getId() {
         return id;
     }

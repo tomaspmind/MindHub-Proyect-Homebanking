@@ -14,12 +14,16 @@ $(document).ready(function () {
         data() {
             return {
                 client: [],
-                dataCards: []
+                dataCards: [],
+                transactionId: [],
+                currentDay: undefined
             }
         },
     
         created(){
             this.loadData()
+            this.actualDay()
+        
         },
     
         methods:{
@@ -28,8 +32,10 @@ $(document).ready(function () {
                 .then(response =>{
                     this.client = response.data
                     this.dataCards = this.client.cards
+                    this.transactionId = this.client.accounts[0].id
                     
-    
+                    
+                    console.log(this.currentDay);
                 })
                 .catch(error => error.message)
             },
@@ -51,6 +57,16 @@ $(document).ready(function () {
             logout(){
                 axios.post('/api/logout').then(response => window.location.href = '/web/index.html')
             },
+            actualDay(){
+                let fecha = new Date();
+                let opciones = { year: 'numeric', month: '2-digit', day: '2-digit' };
+                let fechaFormateada = fecha.toLocaleDateString('es-ES', opciones);
+                let onlyDay = fechaFormateada.split("/")[0]
+                let onlyMonth = fechaFormateada.split("/")[1]
+                let onlyYear = fechaFormateada.split("/")[2]
+                return this.currentDay = onlyYear+"-"+onlyMonth+"-"+onlyDay
+            }
+            
         },
     
     }).mount('#app')

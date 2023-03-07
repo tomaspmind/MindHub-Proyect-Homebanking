@@ -43,7 +43,7 @@ public class Client {
         accounts.add(account);
     }
 
-    public void addClientLoan(ClientLoan clientLoan){
+    public void addLoan(ClientLoan clientLoan){
         clientLoan.setClient(this);
         clientLoans.add(clientLoan);
     }
@@ -130,4 +130,6 @@ public class Client {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

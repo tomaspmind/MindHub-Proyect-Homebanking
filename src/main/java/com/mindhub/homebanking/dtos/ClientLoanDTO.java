@@ -8,7 +8,7 @@ public class ClientLoanDTO {
 
     private long id;
 
-    private int amount;
+    private Double amount;
 
     private Integer payments;
 
@@ -30,7 +30,7 @@ public class ClientLoanDTO {
         return id;
     }
 
-    public int getAmount() {
+    public Double getAmount() {
         return amount;
     }
 

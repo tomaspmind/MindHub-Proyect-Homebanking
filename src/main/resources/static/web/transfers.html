@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/tranfers.css">
+    <link rel="shortcut icon" href="./images/logo-mindhub.png" type="image/x-icon">
+
+    <title>Transfers - Mindhub Bank</title>
+</head>
+<body>
+    <main id="app">
+        <div class="container">
+          <div class="d-flex gap-3 align-items-center">
+            <h1 class="brand text-light">MindHub Bank</h1>
+            <img src="./images/logo-mindhub-sinfondo.png" alt="" style="height: 6.5rem; width: 6.5rem;">
+          </div>
+            <div class="wrapper animated bounceInLeft">
+              <div class="company-info">
+                <h4>Why you want to do a transfer?</h4>
+                <p class="letraMasChica">Making a money transfer can be a convenient option for sending funds from one bank account to another, but it can also have some drawbacks. Here are some benefits and drawbacks to consider:</p>
+                <h5>Benefits:</h5>
+                <ul class="letraMasChica">
+                  <li class="d-flex text-start">Convenience: Electronic money transfers are fast and convenient.</li>
+                  <li class="d-flex text-start">Security: Electronic money transfers are secure.</li>
+                  <li class="d-flex text-start">Speed: Money transfers are usually processed in a matter of minutes or hours.</li>
+                  <li class="d-flex text-start">Records: Money transfers leave a record in your bank account.</li>
+                </ul>
+                <h5>Disadvantages:</h5>
+                <ul class="letraMasChica">
+                  <li class="d-flex text-start">Fees: Banks may charge fees for money transfers.</li>
+                  <li class="d-flex text-start"> Transfer limits: Banks may limit the amount of money you can transfer in a single day or month.</li>
+                  <li class="d-flex text-start">Errors: Errors may occur when entering the recipient's name or account number, which may delay the transfer or result in the loss of funds.</li>
+                  <li class="d-flex text-start">Fraud: Scammers may attempt to obtain your bank account information to make unauthorized transfers.</li>
+                </ul>
+              </div>
+              <div class="contact">
+                <h3>Do a Transfer here!</h3>
+                <div class="d-flex flex-column">
+                  <form @submit.prevent="loadAccounts">
+                  <div>
+                      <label for="tipoTransferencia">Transaction Type:</label>
+                      <select id="tipoTransferencia" v-model="tipoTransferencia">
+                        <option value="" disabled selected>Select Type</option>
+                          <option value="cuentaPropia">My own account</option>
+                          <option value="tercero">Another account</option>
+                      </select>
+                  </div>
+                  <div v-if="tipoTransferencia === 'cuentaPropia'" class="d-flex gap-3 justify-content-between flex-wrap">
+                    <div class="d-flex gap-1">
+                      <label for="cuentaDestino" class="paddingSimple">Origin Account:</label>
+                      <select id="cuentaDestino" v-model="cuentaDestino">
+                          <option value="" disabled selected>Select one Account</option>
+                          <option v-for="account in accounts" :key="account" :value="account.number">{{ account.number }}</option>
+                      </select>
+                    </div>
+                    <div class="d-flex gap-1">
+                      <label for="cuentaDestino2" class="paddingSimple">Destination account:</label>
+                      <select id="cuentaDestino2" v-model="cuentaDestino2">
+                          <option value="" disabled selected>Select another Account</option>
+                          <option v-for="account in accounts" :key="account" :value="account.number">{{ account.number }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div v-if="tipoTransferencia === 'tercero'" class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div class="d-flex gap-3">
+                      <label for="cuentaDestino" class="paddingSimple">Origin Account:</label>
+                      <select id="cuentaDestino" v-model="cuentaDestino">
+                          <option value="" disabled selected>Select one Account</option>
+                          <option v-for="account in accounts" :key="account" :value="account.number">{{ account.number }}</option>
+                      </select>
+                    </div>
+                    <div class="d-flex gap-3">
+                      <label for="numCuenta">Destination account:</label>
+                      <input type="text" id="numCuenta" v-model="cuentaDestino2" class="cambioDeWidth" placeholder="Write the account number">
+                    </div>
+                  </div>
+                  <div>
+                      <label for="monto">Amount:</label>
+                      <input type="number" id="monto" v-model="amount" placeholder="Write the mount you want to transfer">
+                  </div>
+                  <div>
+                      <label for="descripcion">Description:</label>
+                      <input type="text" id="descripcion" v-model="description" placeholder="Description of the transaction">
+                  </div>
+                  <div class="d-flex gap-1">
+                      <button type="submit" @click="alertTranfer">Click to transfer</button>
+                      <button type="submit" @click="cleanForm">Clean Form</button>
+                  </div>
+                  <div>
+                    <a href="./accounts.html" class="boton-a">Back</a>
+                  </div>
+                  </form>
+              </div>
+              </div>
+            </div>
+          </div>
+    </main>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./JS/tranfer.js"></script>
+</body>
+</html>

@@ -18,4 +18,9 @@ public class Extras {
         }while(verifyNumber);
         return Number;
     }
+
+    public static Double loanFess(Double amount){
+        Double amountPlus = amount * 0.2 + amount;
+        return amountPlus;
+    }
 }

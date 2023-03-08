@@ -64,7 +64,7 @@ public class LoanController {
             return new ResponseEntity<>("Amount is Empty",HttpStatus.FORBIDDEN);
         }
         if (payments == null || payments <= 0){
-            return new ResponseEntity<>("Payiment is Empty",HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Payment is Empty",HttpStatus.FORBIDDEN);
         }
         if (accountNumber.isEmpty()){
             return new ResponseEntity<>("Account Destiny is Empty",HttpStatus.FORBIDDEN);

@@ -65,10 +65,10 @@ public class HomebankingApplication {
 			ClientLoan clientLoan3 = new ClientLoan(100000.0,24,tomas,loan2);
 			ClientLoan clientLoan4 = new ClientLoan(200000.0, 36, tomas, loan3);
 
-			Card card1 = new Card(melba.getFirstName()+" "+melba.getLastName(),CardType.DEBIT, CardColor.GOLD,numbers(),cvv(),nowOnlyDay,expirationDay);
-			Card card2 = new Card(melba.getFirstName()+" "+melba.getLastName(),CardType.CREDIT, CardColor.TITANIUM,numbers(),cvv(),nowOnlyDay,expirationDay);
-			Card card4 = new Card(melba.getFirstName()+" "+melba.getLastName(),CardType.CREDIT,CardColor.SILVER,numbers(),cvv(),LocalDate.now().minusYears(5),LocalDate.now());
-			Card card3 = new Card(tomas.getFirstName()+" "+tomas.getLastName(),CardType.CREDIT,CardColor.SILVER,numbers(),cvv(),nowOnlyDay,expirationDay);
+			Card card1 = new Card(melba.getFirstName()+" "+melba.getLastName(),CardType.DEBIT, CardColor.GOLD,numbers(),cvv(),nowOnlyDay,expirationDay,true);
+			Card card2 = new Card(melba.getFirstName()+" "+melba.getLastName(),CardType.CREDIT, CardColor.TITANIUM,numbers(),cvv(),nowOnlyDay,expirationDay,true);
+			Card card4 = new Card(melba.getFirstName()+" "+melba.getLastName(),CardType.CREDIT,CardColor.SILVER,numbers(),cvv(),LocalDate.now().minusYears(5),LocalDate.now(),true);
+			Card card3 = new Card(tomas.getFirstName()+" "+tomas.getLastName(),CardType.CREDIT,CardColor.SILVER,numbers(),cvv(),nowOnlyDay,expirationDay,true);
 
 			melba.addAccount(account1);
 			melba.addAccount(account2);

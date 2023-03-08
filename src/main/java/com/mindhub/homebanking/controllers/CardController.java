@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -28,7 +29,9 @@ public class CardController {
 
     @RequestMapping("/api/clients/current/cards")
     public List<CardDTO> getCurrentCards(Authentication authentication){
-        return clientRepository.findByEmail(authentication.getName()).getCards().stream().map(card -> new CardDTO(card)).collect(toList());
+        Client client = clientRepository.findByEmail(authentication.getName());
+        List<Card> visibleCards = client.getCards().stream().filter(card -> card.getShowCard() == true).collect(Collectors.toList());
+        return visibleCards.stream().map(account -> new CardDTO(account)).collect(toList());
     }
 
     @RequestMapping(path = "/api/clients/current/cards", method = RequestMethod.POST)
@@ -41,15 +44,49 @@ public class CardController {
         if (client.getCards().size() > 6){
             return new ResponseEntity<>("You can't take more cards", HttpStatus.TOO_MANY_REQUESTS);
         }
-        if (client.getCards().stream().anyMatch(card -> type == card.getType() && color == card.getColor())){
+        if (client.getCards().stream().anyMatch(card -> type == card.getType() && color == card.getColor() && card.getShowCard() == true)){
             return new ResponseEntity<>("This card "+type+" "+color+" is already created", HttpStatus.FORBIDDEN);
         }
 
-        Card newCard = new Card(client.getFirstName()+" "+client.getLastName(), type, color, noDuplicatedNumber(), cvv(), LocalDate.now(), LocalDate.now().plusYears(5));
+        Card newCard = new Card(client.getFirstName()+" "+client.getLastName(), type, color, noDuplicatedNumber(), cvv(), LocalDate.now(), LocalDate.now().plusYears(5),true);
         client.addCard(newCard);
         cardRepository.save(newCard);
 
         return new ResponseEntity<>("Congrats "+client.getFirstName()+" "+client.getLastName()+" your card "+type+" "+color+" was successfully created.",HttpStatus.CREATED);
+    }
+
+    @RequestMapping(path = "/api/clients/current/cards", method = RequestMethod.PATCH)
+    public ResponseEntity<Object> deleteCards (Authentication authentication, @RequestParam String number){
+
+        Client authenticatedClient = clientRepository.findByEmail(authentication.getName());
+        Card getCardToDelete = cardRepository.findByNumber(number);
+
+        if(authenticatedClient.getCards().stream().noneMatch(card -> card == getCardToDelete)){
+            return new ResponseEntity<>("You do not posses this card", HttpStatus.FORBIDDEN);
+        }
+        if( getCardToDelete.getCardholder().isEmpty()){
+            return new  ResponseEntity<>("You must select Cardholder option", HttpStatus.BAD_REQUEST);
+        }
+        if( getCardToDelete.getType().toString().isEmpty()){
+            return new  ResponseEntity<>("You must select a card type option", HttpStatus.BAD_REQUEST);
+        }
+        if( getCardToDelete.getColor().toString().isEmpty()){
+            return new  ResponseEntity<>("You must select a card color option", HttpStatus.BAD_REQUEST);
+        }
+        if( getCardToDelete.getCvv().isEmpty()){
+            return new  ResponseEntity<>("You must select CVV option", HttpStatus.BAD_REQUEST);
+        }
+        if( getCardToDelete.getFromDate().toString().isEmpty()){
+            return new  ResponseEntity<>("You must select Date of Creation option", HttpStatus.BAD_REQUEST);
+        }
+        if( getCardToDelete.getThruDate().toString().isEmpty()){
+            return new  ResponseEntity<>("You must select Date of Expiration option", HttpStatus.BAD_REQUEST);
+        }
+
+        getCardToDelete.setShowCard(false);
+        cardRepository.save(getCardToDelete);
+
+        return new ResponseEntity<>("Card successfully deleted!", HttpStatus.OK);
     }
 
     public String cvv() {

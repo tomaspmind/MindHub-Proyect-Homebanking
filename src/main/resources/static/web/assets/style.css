@@ -417,7 +417,7 @@ Buttons
   opacity: 0.7;
 }
 #calendar_content div.today {
-  color: #ffffff;
+  color: rgb(105, 21, 21);
 }
 #calendar_header {
   width: 100%;

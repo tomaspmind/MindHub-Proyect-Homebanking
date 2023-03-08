@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.configurations.WebAuthentication;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -18,9 +19,11 @@ import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.mindhub.homebanking.extras.Extras.number;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 @RestController
 @RequestMapping("/api")
@@ -79,9 +82,11 @@ public class ClientController {
     @RequestMapping("/clients/current")
     public ClientDTO getCurrentClient(Authentication authentication){
         String email = authentication.getName();
-        return new ClientDTO(clientRepository.findByEmail(email));
+        Client client = clientRepository.findByEmail(email);
+        Set<Card> visibleCards = client.getCards().stream().filter(card -> card.getShowCard() == true).collect(toSet());
+        client.setCards(visibleCards);
+        return new ClientDTO(client);
     }
-
 
 
 }

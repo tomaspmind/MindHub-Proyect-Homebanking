@@ -16,7 +16,8 @@ $(document).ready(function () {
                 client: [],
                 dataCards: [],
                 transactionId: [],
-                currentDay: undefined
+                currentDay: undefined,
+                number: ""
             }
         },
     
@@ -65,7 +66,37 @@ $(document).ready(function () {
                 let onlyMonth = fechaFormateada.split("/")[1]
                 let onlyYear = fechaFormateada.split("/")[2]
                 return this.currentDay = onlyYear+"-"+onlyMonth+"-"+onlyDay
-            }
+            },
+            deleteCard(){
+                axios.patch("/api/clients/current/cards", `number=${this.number}`)
+                .then(response => {
+                    Swal.fire({
+                        title: `${response.data}`,
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                        }).then(response => {
+                            location.href = '/web/cards.html';
+                            this.loadData()
+                        })
+                })
+            },
+            alertDeleteCard(){
+                Swal.fire({
+                    title: 'Are you sure you want to delete this card?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Confirm'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.deleteCard();
+                }
+                })
+            },
             
         },
     

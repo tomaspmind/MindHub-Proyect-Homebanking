@@ -104,7 +104,7 @@
               <table class="text-dark container">
                 <thead>
                   <tr>
-                    <th class="fw-semibold text-center border-1 border border-dark text-light p-2" colspan="7" style="background-color: #6D0B0B;">All Transactions</th>
+                    <th class="fw-semibold text-center border-1 border border-dark text-light p-2" colspan="8" style="background-color: #6D0B0B;">All Transactions</th>
                   </tr>
                     <tr class="border-bottom border-1 border-dark">
                       <th class="desaparecer"><label for=""><input type="checkbox" onclick="marcar(this)"></label></th>
@@ -114,6 +114,7 @@
                         <th class="fw-semibold" scope="col">Description</th>
                         <th class="fw-semibold" scope="col">Amount</th>
                         <th class="fw-semibold desaparecer" scope="col">Hour</th>
+                        <th class="fw-semibold desaparecer" scope="col">Balance</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -126,6 +127,7 @@
                         <td class=" letra-mas-chica">{{transaction.description}}</td>
                         <td class=" ">{{transaction.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
                         <td class=" desaparecer">{{justHour(transaction.date)}}</td>
+                        <td class=" desaparecer">{{transaction.showCurrentBalance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
                     </tr>
                     <tr v-else>
                       <td colspan="7" class="text-center fs-3">Your have no Transactions</td>

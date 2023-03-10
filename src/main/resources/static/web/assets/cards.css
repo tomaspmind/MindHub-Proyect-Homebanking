@@ -12,6 +12,13 @@ body {
   gap: 1rem;
 }
 
+.dentroModal{
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
 p {
   font-family: "Poppins", sans-serif;
   font-size: 1.1em;
@@ -159,6 +166,14 @@ a.article{
 .btn{
   background-color: #6D0B0B !important;
   color: white !important;
+  border: none !important;
+}
+
+.botones-hover:hover{
+  background-color: white !important;
+  color: #6D0B0B !important;
+  text-shadow: 1px 1px 1px black;
+  border: 1px solid black !important;
 }
 
 .nada{

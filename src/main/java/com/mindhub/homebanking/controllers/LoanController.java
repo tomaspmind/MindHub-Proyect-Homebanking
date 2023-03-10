@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.mindhub.homebanking.extras.Extras.currentBalanceCredit;
 import static com.mindhub.homebanking.extras.Extras.loanFess;
 
 @RestController
@@ -85,8 +86,8 @@ public class LoanController {
             return new ResponseEntity<>("The account Destiny is not your account",HttpStatus.FORBIDDEN);
         }
 
-        ClientLoan clientLoan = new ClientLoan(loanFess(amount), payments, clientAutenticado,typeLoan);
-        Transaction loanTransaction = new Transaction(TransactionType.CREDIT,amount,typeLoan.getName()+" Loan approve", LocalDateTime.now());
+        ClientLoan clientLoan = new ClientLoan(loanFess(amount,typeLoan), payments, clientAutenticado,typeLoan);
+        Transaction loanTransaction = new Transaction(TransactionType.CREDIT,amount,typeLoan.getName()+" Loan approve", LocalDateTime.now(),currentBalanceCredit(accountRepository,accountDestino,amount));
 
         typeLoan.addLoans(clientLoan);
         accountDestino.addTransaction(loanTransaction);

@@ -4,14 +4,16 @@ createApp({
 
     data() {
         return {
-        tipoDeLoan: {},
+        tipoDeLoan: [],
         loanId: '',
-        loanPayments: '',
+        loanPayments: undefined,
         loanAmount: '',
         loanAccount: '',
         accounts: [],
         loans: [],
-        payments: []
+        payments: [],
+        fee: []
+        
         }
     },
 
@@ -31,6 +33,7 @@ createApp({
             axios.get("http://localhost:8080/api/loans")
             .then(response =>{
                 this.loans = response.data
+                
                 
             })
         },
@@ -81,13 +84,27 @@ createApp({
         changed(){
             this.tipoDeLoan = this.loans.filter(loan => loan.id == this.loanId)
             this.payments = this.tipoDeLoan[0].payment
-            console.log(this.tipoDeLoan);
+            this.guardFee = this.tipoDeLoan[0].fee
+            this.guardFeePayments = this.tipoDeLoan[0].feePayments
+            this.indicePayment = this.payments.indexOf(this.loanPayments)
+            this.extra = this.guardFeePayments[this.indicePayment]
+            console.log(this.extra);
+            
         },
         paymentsForMonth(){
-            let amountWithpercentage = this.loanAmount * 0.2 + this.loanAmount
-            let monthPayment = (amountWithpercentage / this.loanPayments).toLocaleString('de-DE', { style: 'currency', currency: 'USD' })
+            let amountWithpercentage = this.loanAmount * this.guardFee
+            let monthPayment = (amountWithpercentage / this.loanPayments * this.extra).toLocaleString('de-DE', { style: 'currency', currency: 'USD' })
             return monthPayment
-        }
+        },
+        pertentageFee(data){
+            let pertentage = (data - 1)*100
+            return Math.round(pertentage)
+        },
+        pertentageFeePayments(data){
+            let porcentaje = (this.guardFeePayments[this.payments.indexOf(data)] - 1) * 100 
+            return Math.round(porcentaje);
+        },
+        
 
 
     },

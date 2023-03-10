@@ -16,7 +16,7 @@
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
+          <div class="modal-content modal-content2">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -58,7 +58,7 @@
 
       <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog2">
-          <div class="modal-content modal-content2">
+          <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -89,9 +89,6 @@
             <ul class="list-unstyled components">
                 <p class="border-bottom border-dark fs-4">Dashboard</p>
                 
-                <li>
-                    <button class="btn btn-danger" @click="CreateNewAccount" v-if="accounts.length < 3">Create Account</button>
-                </li>
                 <li >
                     <a href="./cards.html"><i class="bi bi-credit-card"></i> Cards</a>
                 </li>
@@ -124,13 +121,13 @@
                 <a href="#"><i class="bi bi-mortarboard"></i> Information</a>
                 </li>
             </ul>
-            <ul class="list-unstyled CTAs">
+            <!-- <ul class="list-unstyled CTAs">
                 <li><a href="#" class="article" data-bs-toggle="modal" data-bs-target="#exampleModal3"><i class="bi bi-exclamation-triangle"></i> Reports</a></li>
-            </ul>
+            </ul> -->
 
 <!-- MODAL REPORTES -->
 
-<div class="modal fade extras" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade extras" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-reporte">
     <div class="modal-content">
         <div class="modal-header">
@@ -155,7 +152,9 @@
         </div>
     </div>
     </div>
-</div>
+</div> -->
+
+
 
 
             </nav>
@@ -187,18 +186,18 @@
                 </div>
             </nav>
             <div class="card2 overlay">
-                <p class="fw-bold text-dark">Balance total: </p>
-                <p class="text-center fs-1 fw-bold text-dark"> {{totalBalance()}}</p>
+                <p class="fw-bold text-light letras">Balance total: </p>
+                <p class="text-center fs-1 fw-bold text-light letras"> {{totalBalance()}}</p>
             </div>
             <div class="line"></div>
             <div class="cards2">
-                <div class="card2 text-dark overlay" v-for="account of accounts" v-if="accounts.length > 0">
-                    <p class="fw-bold text-dark">Balance: </p>
-                    <p class="text-center fs-2 fw-bold text-dark">{{account.balance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
+                <div class="card2 text-light letras overlay" v-for="account of accounts" v-if="accounts.length > 0">
+                    <p class="fw-bold text-light letras">Balance: </p>
+                    <p class="text-center fs-2 fw-bold text-light letras">{{account.balance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
                     <div class="d-flex flex-column text-center">
-                        <p class="letra text-center border-top border-1 text-dark">Account: {{account.number}}</p>
+                        <p class="letra text-center border-top border-1 text-light letras">Account: {{account.number}}</p>
                         <div class="d-flex justify-content-evenly flex-column">
-                            <p class="letra text-center text-dark">{{parseDate(account.creationDate)}}</p>
+                            <p class="letra text-center text-light letras">{{parseDate(account.creationDate)}}</p>
                             <a :href='"account.html?id="+account.id' style="color: white;" class="boton-inventado">Transactions</a>
                         </div>
                     </div>
@@ -206,9 +205,45 @@
                 <div v-else>
                     <h2>You have no Accounts</h2>
                 </div>
+                <!-- Modal -->
+  <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Choose the options to delete</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="dentroModal">
+                <label for="tipoTransferencia">Account to Delete:</label>
+                <select id="tipoTransferencia" v-model="accountNumber">
+                    <option value="" disabled selected>Select one option</option>
+                    <option v-for="account of accounts" :value="account.number">{{account.number}}</option>
+                </select>
+                <label for="tipoTransferencia6">Account to transfer the restant balance:</label>
+                <select id="tipoTransferencia6" v-model="accountDestiny">
+                    <option value="" disabled selected>Select one option</option>
+                    <option v-for="account of accounts" :value="account.number">{{account.number}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+        <button @click="alertDeleteAccount" type="button" class="btn btn-primary">Click here for Delete</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
             </div>
             <div class="line"></div>
-            <table class="text-dark container">
+            <div class="d-flex justify-content-evenly flex-wrap gap-1">
+                
+                <button class="btn btn-danger botones-hover" @click="alertCreateAccount" v-if="accounts.length < 3">Create Account</button>
+                
+                <button v-if="accounts.length >= 2" type="button" class="btn btn-primary botones-hover" data-bs-toggle="modal" data-bs-target="#exampleModal5">Here you can delete an Account</button>
+            </div>
+            <div class="line"></div>
+            <table class="text-dark w-100">
                 <thead>
                     <tr>
                         <th class="fw-semibold text-center border-1 border border-dark text-light p-2" colspan="12" style="background-color: #6D0B0B;">Last Transactions</th>
@@ -221,6 +256,7 @@
                         <th class="fw-semibold letra-mas-chica">Description</th>
                         <th class="fw-semibold letra-mas-chica">Amount</th>
                         <th class="fw-semibold desaparecer">Hour</th>
+                        <th class="fw-semibold desaparecer">Balance</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -233,14 +269,17 @@
                         <td class=" letra-mas-chica">{{transaction.description}}</td>
                         <td class=" ">{{transaction.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
                         <td class=" desaparecer">{{justHour(transaction.date)}}</td>
+                        <td class=" desaparecer">{{transaction.showCurrentBalance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
                     </tr>
                     <tr v-else>
-                        <td colspan="7" class="text-center text-dark fw-bold fs-4"><br> You have no transactions</td>
+                        <td colspan="7" class="text-center text-dark"><br> <p class="fw-bold text-dark fs-4"> You have no transactions.</p> Here you can see details of your transactions when you have them, such as the time, the amount, the type of transaction, etc. <br> 
+                            You can make a transfer with the "Do a Transfer" button that is in the sidebar.</td>
                     </tr>
                 </tbody>
             </table>
             <div class="line"></div>
             <table class="table">
+                <thead>
             <tr>
                 <th id="loans" class="fw-semibold text-center border-1 border border-dark text-light p-2" colspan="4" style="background-color: #6D0B0B;">Your Loans {{client.firstName}} {{client.lastName}}</th>
             </tr>
@@ -250,6 +289,8 @@
                 <th>Payments</th>
                 <!-- <th></th> -->
             </tr>
+        </thead>
+        <tbody>
             <tr v-for="loan of dataLoans" v-if="dataLoans.length > 0">
                 <td>{{loan.name}}</td>
                 <td>$ {{loan.amount}}</td>
@@ -257,9 +298,10 @@
                 <!-- <td><button class="">Pay Now</button></td> -->
             </tr>
             <tr v-else>
-                <td class="fw-bold text-dark text-center fs-4" colspan="7"><br> You have no Loans</td>
+                <td class="text-dark text-center" colspan="7"><br> <p class="fs-4 text-dark fw-bold">You have no Loans.</p>  Here you can see details of your loans, such as the amount requested, the type of loan and the number of installments requested. <br>
+                    You can request one with the "Apply Loan" button in the sidebar.</td>
             </tr>
-            
+        </tbody>
         </table>
         <div class="line"></div>
         

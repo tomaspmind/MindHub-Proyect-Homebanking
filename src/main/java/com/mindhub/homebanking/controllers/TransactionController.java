@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
-import static com.mindhub.homebanking.extras.Extras.number;
+import static com.mindhub.homebanking.extras.Extras.*;
 
 @RestController
 public class TransactionController {
@@ -82,8 +82,8 @@ public class TransactionController {
             return new ResponseEntity<>("You dont have enough money for that",HttpStatus.BAD_REQUEST);
         }
 
-        Transaction transactionOrigin = new Transaction(TransactionType.DEBIT, amount,description,LocalDateTime.now());
-        Transaction transactionDestiny = new Transaction(TransactionType.CREDIT,amount,description,LocalDateTime.now());
+        Transaction transactionOrigin = new Transaction(TransactionType.DEBIT, amount,description,LocalDateTime.now(),currentBalanceDebit(accountRepository,originAccount,amount));
+        Transaction transactionDestiny = new Transaction(TransactionType.CREDIT,amount,description,LocalDateTime.now(),currentBalanceCredit(accountRepository,destinyAccount,amount));
         originAccount.addTransaction(transactionOrigin);
         destinyAccount.addTransaction(transactionDestiny);
         transactionRepository.save(transactionOrigin);

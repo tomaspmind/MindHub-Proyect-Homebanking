@@ -45,16 +45,16 @@
                       <label for="tipoTransferencia">Loan Type:</label>
                       <select id="tipoTransferencia" @change="changed" v-model="loanId">
                         <option value="" disabled selected>Select Type</option>
-                        <option v-for="loan in loans" :value="loan.id">{{loan.name}}</option>
+                        <option v-for="loan in loans" :value="loan.id">{{loan.name}} - plus %{{pertentageFee(loan.fee)}} fee</option>
                           
                       </select>
                   </div>
                   <div class="d-flex gap-3 justify-content-between flex-wrap">
                     <div class="d-flex gap-1">
                       <label for="cuentaDestino" class="paddingSimple">Select Payment:</label>
-                      <select id="cuentaDestino" v-model="loanPayments" >
+                      <select id="cuentaDestino" @change="changed" v-model="loanPayments" >
                           <option value="" disabled selected>Select one payment</option>
-                          <option v-for="payment in payments" :value="payment" >{{ payment }}</option>
+                          <option v-for="payment in payments" :value="payment" >{{ payment }} - plus % {{pertentageFeePayments(payment)}} fee</option>
                       </select>
                     </div>
                     <div class="d-flex gap-1">
@@ -72,7 +72,7 @@
                   </div>
 
                   <div>
-                    <h4 v-if="loanAmount != null" class="text-center">You gonna pay {{paymentsForMonth()}} for month</h4>
+                    <h4 v-if="loanAmount != null" class="text-center">Your gonna pay {{paymentsForMonth()}} for month</h4>
                   </div>
                   
                   <div class="d-flex gap-1">

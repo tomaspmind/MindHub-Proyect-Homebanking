@@ -17,6 +17,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.mindhub.homebanking.extras.Extras.cvv;
+import static com.mindhub.homebanking.extras.Extras.numbers;
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -31,7 +33,7 @@ public class CardController {
     public List<CardDTO> getCurrentCards(Authentication authentication){
         Client client = clientRepository.findByEmail(authentication.getName());
         List<Card> visibleCards = client.getCards().stream().filter(card -> card.getShowCard() == true).collect(Collectors.toList());
-        return visibleCards.stream().map(account -> new CardDTO(account)).collect(toList());
+        return visibleCards.stream().map(card -> new CardDTO(card)).collect(toList());
     }
 
     @RequestMapping(path = "/api/clients/current/cards", method = RequestMethod.POST)
@@ -82,27 +84,16 @@ public class CardController {
         if( getCardToDelete.getThruDate().toString().isEmpty()){
             return new  ResponseEntity<>("You must select Date of Expiration option", HttpStatus.BAD_REQUEST);
         }
+        if (getCardToDelete.getShowCard() == false){
+            return new ResponseEntity<>("This card is already deleted",HttpStatus.BAD_REQUEST);
+        }
 
         getCardToDelete.setShowCard(false);
         cardRepository.save(getCardToDelete);
 
-        return new ResponseEntity<>("Card successfully deleted!", HttpStatus.OK);
+        return new ResponseEntity<>("Card successfully deleted!", HttpStatus.ACCEPTED);
     }
 
-    public String cvv() {
-        int cvv = (int) (Math.random() * 999);
-        String cvvCompletado = String.format("%03d", cvv);
-        return cvvCompletado;
-    }
-
-    public static String numbers(){
-        int first = (int) (Math.random()*(9999 - 1000)+1000);
-        int second = (int) (Math.random()*(9999 - 1000)+1000);
-        int third = (int) (Math.random()*(9999 - 1000)+1000);
-        int four = (int) (Math.random()*(9999 - 1000)+1000);
-        String numbers = first + "-" + second + "-" + third + "-" + four;
-        return numbers;
-    }
 
     public String noDuplicatedNumber(){
         String Number;

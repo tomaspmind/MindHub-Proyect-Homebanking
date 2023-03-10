@@ -71,7 +71,7 @@ public class ClientController {
         }
 
         Client client = new Client(first, lastName, email, passwordEncoder.encode(password));
-        Account account = new Account(number(accountRepository), LocalDateTime.now(), 0);
+        Account account = new Account(number(accountRepository), LocalDateTime.now(), 0,true);
         client.addAccount(account);
         clientRepository.save(client);
         accountRepository.save(account);
@@ -83,7 +83,12 @@ public class ClientController {
     public ClientDTO getCurrentClient(Authentication authentication){
         String email = authentication.getName();
         Client client = clientRepository.findByEmail(email);
+
         Set<Card> visibleCards = client.getCards().stream().filter(card -> card.getShowCard() == true).collect(toSet());
+
+        Set<Account> visibleAccounts = client.getAccounts().stream().filter(account -> account.getShowAccount() == true).collect(toSet());
+
+        client.setAccounts(visibleAccounts);
         client.setCards(visibleCards);
         return new ClientDTO(client);
     }

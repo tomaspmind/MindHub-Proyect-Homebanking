@@ -2,6 +2,13 @@
 body {
   font-family: "Poppins", sans-serif;
   background:#e9e5e5;
+  background-image: url(../images/card-fondo.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.fondo{
+  background: #ffffff33;
 }
 
 .logoImagen{
@@ -12,12 +19,32 @@ body {
   gap: 1rem;
 }
 
+.dentroModal{
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
 p {
   font-family: "Poppins", sans-serif;
   font-size: 1.1em;
   font-weight: 300;
   line-height: 1.7em;
   color: #999;
+}
+
+.letra-titulos{
+  color: white;
+  text-shadow: 1px 1px 1px black;
+  text-align: center;
+}
+
+.letra-titulos2{
+  color: black;
+  text-align: start;
+  text-shadow: 1px 1px 1px white;
+
 }
 
 a,
@@ -45,8 +72,16 @@ a:focus {
 .line {
   width: 100%;
   height: 1px;
-  border-bottom: 1px dashed #ddd;
   margin: 40px 0;
+}
+
+.modal-edit{
+  padding: 5px;
+  border-radius: 10px;
+}
+
+[v-cloak]{
+  display: none;
 }
 
 /* ---------------------------------------------------
@@ -61,7 +96,7 @@ a:focus {
 #sidebar {
   min-width: 250px;
   max-width: 250px;
-  background: #BB1C0E;
+  background: #283044;
   color: #fff;
   transition: all 0.3s;
 }
@@ -78,7 +113,7 @@ a:focus {
 
 #sidebar .sidebar-header {
   padding: 20px;
-  background: #BB1C0E;
+  background: #283044;
 }
 
 #sidebar ul.components {
@@ -99,19 +134,19 @@ a:focus {
 
 #sidebar ul li a:hover {
   color: #fff;
-  background: #6D0B0B;
+  background: #78A1BB;
 }
 
 #sidebar ul li.active > a,
 a[aria-expanded="true"] {
   color: #fff;
-  background: #6D0B0B;
+  background: #78A1BB;
 }
 
 ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
-  background: #BB1C0E;
+  background: #78A1BB;
 }
 
 ul.CTAs {
@@ -132,14 +167,15 @@ a.download {
 }
 
 a.article{
-  background: #6D0B0B !important;
+  background: #283044 !important;
   color: #fff !important;
 }
 
 .article:hover{
-  background-color: #ffff !important;
-  color: #6D0B0B !important;
+  background-color: #78A1BB !important;
+  color: white !important;
 }
+
 
 /* ---------------------------------------------------
     CONTENT STYLE
@@ -159,6 +195,14 @@ a.article{
 .btn{
   background-color: #6D0B0B !important;
   color: white !important;
+  border: none !important;
+}
+
+.botones-hover:hover{
+  background-color: white !important;
+  color: #6D0B0B !important;
+  text-shadow: 1px 1px 1px black;
+  border: 1px solid black !important;
 }
 
 .nada{
@@ -279,7 +323,7 @@ a.article{
 .line {
   width: 100%;
   height: 1px;
-  border-bottom: 1px dashed #ddd;
+  
   margin: 40px 0;
 }
 

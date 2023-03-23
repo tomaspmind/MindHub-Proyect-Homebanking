@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./assets/loan-application.css">
     <link rel="shortcut icon" href="./images/logo-mindhub.png" type="image/x-icon">
 
-    <title>Transfers - Mindhub Bank</title>
+    <title>Loans - Mindhub Bank</title>
 </head>
 <body>
     <main id="app">
@@ -43,25 +43,26 @@
                   <form @submit.prevent="loadAccounts">
                   <div>
                       <label for="tipoTransferencia">Loan Type:</label>
-                      <select id="tipoTransferencia" @change="changed" v-model="loanId">
+                      <select id="tipoTransferencia" @change="changed" v-model="loanId" class="w-100">
                         <option value="" disabled selected>Select Type</option>
-                        <option v-for="loan in loans" :value="loan.id">{{loan.name}}</option>
+                        <option v-for="loan in loans" :value="loan.id" v-cloak>{{loan.name}} - plus %{{pertentageFee(loan.fee)}} fee / maxMount: {{loan.maxAmount}}</option>
                           
                       </select>
                   </div>
-                  <div class="d-flex gap-3 justify-content-between flex-wrap">
-                    <div class="d-flex gap-1">
+                  <div class="d-flex gap-3 justify-content-between flex-wrap flex-column">
+                    <div class="d-flex gap-1 flex-column">
                       <label for="cuentaDestino" class="paddingSimple">Select Payment:</label>
-                      <select id="cuentaDestino" v-model="loanPayments" >
+                      <select id="cuentaDestino" @change="changed" v-model="loanPayments" >
                           <option value="" disabled selected>Select one payment</option>
-                          <option v-for="payment in payments" :value="payment" >{{ payment }}</option>
+                          <option v-for="payment in payments" :value="payment" v-cloak>{{ payment }} - plus % {{pertentageFeePayments(payment)}} fee
+                          </option>
                       </select>
                     </div>
-                    <div class="d-flex gap-1">
+                    <div class="d-flex gap-1 flex-column">
                       <label for="cuentaDestino2" class="paddingSimple">Destination account:</label>
                       <select id="cuentaDestino2" v-model="loanAccount">
                           <option value="" disabled selected>Select Account</option>
-                          <option v-for="account in accounts" :key="account" :value="account.number">{{ account.number }}</option>
+                          <option v-for="account in accounts" :key="account" :value="account.number" v-cloak>{{ account.number }}</option>
                       </select>
                     </div>
                   </div>
@@ -72,10 +73,10 @@
                   </div>
 
                   <div>
-                    <h4 v-if="loanAmount != null" class="text-center">You gonna pay {{paymentsForMonth()}} for month</h4>
+                    <h4 v-if="loanAmount != null" class="text-center" v-cloak>Your gonna pay {{paymentsForMonth()}} for month</h4>
                   </div>
                   
-                  <div class="d-flex gap-1">
+                  <div class="d-flex gap-1 media">
                       <button type="submit" @click="alertLoan">Click to register the loan</button>
                       <button type="submit" @click="cleanForm">Clean Form</button>
                   </div>

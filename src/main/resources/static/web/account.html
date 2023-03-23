@@ -29,18 +29,18 @@
                   <a href="./cards.html">Cards</a>
                 </li>
                 <li>
-                  <a href="#">Contacts</a>
+                  <a href="./transfers.html">Do a transfer</a>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="#">Withdraw money</a>
-                </li>
+                </li> -->
               </ul>
               <!-- <ul class="list-unstyled CTAs">
                 <li><a href="#" class="article">Export document</a></li>
               </ul> -->
-              <ul class="list-unstyled CTAs">
+              <!-- <ul class="list-unstyled CTAs">
                 <li><a href="#" class="article">Reports</a></li>
-              </ul>
+              </ul> -->
             </nav>
           
             
@@ -61,21 +61,21 @@
                     <div class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle nada" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="bi bi-gear"></i> Settings</a>
                       <ul class="dropdown-menu nada">
-                          <li><a class="dropdown-item" href="#"><i class="bi bi-palette"></i> Change colors</a></li>
+                          <!-- <li><a class="dropdown-item" href="#"><i class="bi bi-palette"></i> Change colors</a></li>
                           <li><a class="dropdown-item" href="#"><i class="bi bi-credit-card"></i> Change card</a></li>
                           <li><a class="dropdown-item" href="#"><i class="bi bi-pencil-square"></i> Edit information</a></li>
-                          <li><hr class="dropdown-divider"></li>
+                          <li><hr class="dropdown-divider"></li> -->
                           <li><a @click="logout" class="dropdown-item" href="#"><i class="bi bi-power"></i> Disconect</a></li>
                       </ul>
                   </div>
                     
                     <div class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle nada" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{objAccount.number}}</a>
+                      <a class="nav-link dropdown-toggle nada" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" v-cloak>{{objAccount.number}}</a>
                       <ul class="dropdown-menu nada">
-                          <li v-for="account of accounts"><a class="dropdown-item" :href='"account.html?id="+account.id'>{{account.number}}</a></li>
+                          <li v-for="account of accounts"><a class="dropdown-item" :href='"account.html?id="+account.id' v-cloak>{{account.number}}</a></li>
                       </ul>
                   </div>
-                    <h6 style="margin-top: 2.5px;">${{objAccount.balance}}</h6>
+                    <h6 style="margin-top: 2.5px;" v-cloak>${{objAccount.balance}}</h6>
                   </div>
                 </div>
               </nav>
@@ -83,56 +83,161 @@
               <div class="d-flex justify-content-evenly flex-wrap gap-3">
 
                 <div class="d-flex gap-2">
-                  <input type="text" name="" id="" placeholder="Filter Search" class="opciones">
-                  <button class="btn"><i class="bi bi-arrow-clockwise"></i>Refresh</button>
+                  <input type="text" v-model="filtro" placeholder="Filter for Description" class="opciones">
+                  <button class="btn" @click="refresh"><i class="bi bi-arrow-clockwise"></i>Refresh</button>
                 </div>
                 <div class="d-flex gap-2">
-                  <input type="text" name="" id="" placeholder="Filter for Date" class="opciones">
-                  <button class="btn"><i class="bi bi-arrow-clockwise"></i>Refresh</button>
+                  <input type="text" placeholder="Filter for Date" class="opciones" v-model="filtro2">
+                  <button class="btn"  @click="refresh"><i class="bi bi-arrow-clockwise"></i>Refresh</button>
                 </div>
                 
-                  <select class="form-select p-2 opciones" aria-label="Default select example">
-                      <option selected>Open this select menu</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                  </select>
+                  <!-- <select class="form-select p-2 opciones" aria-label="Default select example" v-model="tipoOrden" @click="ordenar">
+                      <option selected>Order for:</option>
+                      <option value="date">Date</option>
+                      <option value="amount">Amount</option>
+                  </select> -->
+                
               
               </div>
 
               <div class="line"></div>
-              <table class="text-dark container">
+              <table class="text-dark w-100">
                 <thead>
                   <tr>
-                    <th class="fw-semibold text-center border-1 border border-dark text-light p-2" colspan="7" style="background-color: #6D0B0B;">All Transactions</th>
+                    <th class="fw-semibold text-center border-1 border border-dark text-light p-2" colspan="8" style="background-color: #6D0B0B;">All Transactions</th>
                   </tr>
-                    <tr class="border-bottom border-1 border-dark">
+                    <tr class="border-bottom border-2 border-dark letra-transactions">
                       <th class="desaparecer"><label for=""><input type="checkbox" onclick="marcar(this)"></label></th>
-                        <th class="fw-semibold p-2" scope="col">Nº</th>
-                        <th class="fw-semibold" scope="col">Day</th>
-                        <th class="fw-semibold" scope="col">Type</th>
-                        <th class="fw-semibold" scope="col">Description</th>
-                        <th class="fw-semibold" scope="col">Amount</th>
-                        <th class="fw-semibold desaparecer" scope="col">Hour</th>
+                        <th class="fw-semibold p-2 letra-transactions" scope="col">Nº</th>
+                        <th class="fw-semibold letra-transactions desaparecer" scope="col">Day</th>
+                        <th class="fw-semibold letra-transactions" scope="col">Type</th>
+                        <th class="fw-semibold letra-transactions" scope="col">Description</th>
+                        <th class="fw-semibold letra-transactions" scope="col">Amount</th>
+                        <th class="fw-semibold desaparecer letra-transactions" scope="col">Hour</th>
+                        <th class="fw-semibold desaparecer letra-transactions" scope="col">Balance</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr v-for="transaction of transactions" class="border-bottom border-1 tabla-hover" v-if="transactions.length > 0">
-                        <td class="desaparecer"><label><input type="checkbox" name={{transaction.id}}></label></td>
-                        <td class=""> {{transaction.id}}</td>
-                        <td class=" letra-mas-chica">{{parseDate(transaction.date)}}</td>
-                        <td class=" d-flex flechas" v-if="transaction.type == 'CREDIT'"><p class="desaparecer" style="color: green;">{{transaction.type}}</p><i style="color: green;" class="bi bi-arrow-up"></i></td>
-                        <td class=" d-flex flechas" v-else><p class="desaparecer" style="color: red;">{{transaction.type}}</p><i style="color: red;" class="bi bi-arrow-down"></i></td>
-                        <td class=" letra-mas-chica">{{transaction.description}}</td>
-                        <td class=" ">{{transaction.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
-                        <td class=" desaparecer">{{justHour(transaction.date)}}</td>
+                <tbody v-if="filtro.length == 0 && filtro2.length == 0">
+                    <tr v-for="transaction of transactions" class="border-bottom border-1 tabla-hover letra-transactions" v-if="transactions.length > 0">
+                        <td v-cloak class="desaparecer letra-transactions"><label><input type="checkbox" name={{transaction.id}}></label></td>
+                        <td v-cloak class=" letra-transactions"> {{transaction.id}}</td>
+                        <td v-cloak class=" letra-mas-chica letra-transactions desaparecer">{{parseDate(transaction.date)}}</td>
+                        <td v-cloak class=" d-flex flechas letra-transactions justify-content-center" v-if="transaction.type == 'CREDIT'"><p class="desaparecer marginCero" style="color: green;" v-cloak>{{transaction.type}}</p><i v-cloak style="color: green;" class="bi bi-arrow-up"></i></td>
+                        <td v-cloak class=" d-flex flechas letra-transactions justify-content-center" v-else><p class="desaparecer marginCero" style="color: red;" v-cloak>{{transaction.type}}</p><i v-cloak style="color: red;" class="bi bi-arrow-down"></i></td>
+                        <td v-cloak class=" letra-mas-chica letra-transactions">{{transaction.description}}</td>
+                        <td v-cloak class=" letra-transactions">{{transaction.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
+                        <td v-cloak class=" desaparecer letra-transactions">{{justHour(transaction.date)}}</td>
+                        <td v-cloak class=" desaparecer letra-transactions">{{transaction.showCurrentBalance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
                     </tr>
                     <tr v-else>
-                      <td colspan="7" class="text-center fs-3">Your have no Transactions</td>
+                      <td colspan="7" class="text-center fs-3" v-cloak>Your have no Transactions</td>
                     </tr>
+                    
                 </tbody>
+                <tbody v-if="filtro.length > 0 && filtro2.length == 0">
+                  <tr v-for="transaction of elementsFiltered" class="border-bottom border-1 tabla-hover letra-transactions" v-if="transactions.length > 0">
+                      <td v-cloak class="desaparecer letra-transactions"><label><input type="checkbox" name={{transaction.id}}></label></td>
+                      <td v-cloak class=" letra-transactions"> {{transaction.id}}</td>
+                      <td v-cloak class=" letra-mas-chica letra-transactions desaparecer">{{parseDate(transaction.date)}}</td>
+                      <td v-cloak class=" d-flex flechas letra-transactions justify-content-center" v-if="transaction.type == 'CREDIT'"><p class="desaparecer marginCero" style="color: green;" v-cloak>{{transaction.type}}</p><i v-cloak style="color: green;" class="bi bi-arrow-up"></i></td>
+                      <td v-cloak class=" d-flex flechas letra-transactions justify-content-center" v-else><p class="desaparecer marginCero" style="color: red;" v-cloak>{{transaction.type}}</p><i v-cloak style="color: red;" class="bi bi-arrow-down"></i></td>
+                      <td v-cloak class=" letra-mas-chica letra-transactions">{{transaction.description}}</td>
+                      <td v-cloak class=" letra-transactions">{{transaction.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
+                      <td v-cloak class=" desaparecer letra-transactions">{{justHour(transaction.date)}}</td>
+                      <td v-cloak class=" desaparecer letra-transactions">{{transaction.showCurrentBalance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
+                  </tr>
+                  <tr v-else>
+                    <td colspan="7" class="text-center fs-3" v-cloak>Your have no Transactions</td>
+                  </tr>
+                  
+              </tbody>
+              <tbody v-if="filtro2.length > 0 && filtro.length == 0">
+                <tr v-for="transaction of elementsFilteredForDate" class="border-bottom border-1 tabla-hover letra-transactions" v-if="transactions.length > 0">
+                    <td v-cloak class="desaparecer letra-transactions"><label><input type="checkbox" name={{transaction.id}}></label></td>
+                    <td v-cloak class=" letra-transactions"> {{transaction.id}}</td>
+                    <td v-cloak class=" letra-mas-chica letra-transactions desaparecer">{{parseDate(transaction.date)}}</td>
+                    <td v-cloak class=" d-flex flechas letra-transactions justify-content-center" v-if="transaction.type == 'CREDIT'"><p class="desaparecer marginCero" style="color: green;" v-cloak>{{transaction.type}}</p><i v-cloak style="color: green;" class="bi bi-arrow-up"></i></td>
+                    <td v-cloak class=" d-flex flechas letra-transactions justify-content-center" v-else><p class="desaparecer marginCero" style="color: red;" v-cloak>{{transaction.type}}</p><i v-cloak style="color: red;" class="bi bi-arrow-down"></i></td>
+                    <td v-cloak class=" letra-mas-chica letra-transactions">{{transaction.description}}</td>
+                    <td v-cloak class=" letra-transactions">{{transaction.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
+                    <td v-cloak class=" desaparecer letra-transactions">{{justHour(transaction.date)}}</td>
+                    <td v-cloak class=" desaparecer letra-transactions">{{transaction.showCurrentBalance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
+                </tr>
+                <tr v-else>
+                  <td colspan="7" class="text-center fs-3" v-cloak>Your have no Transactions</td>
+                </tr>
+                
+            </tbody>
                 
             </table>
+            <div class="line"></div>
+            <footer class="text-center">
+              <div class="footer-above">
+                  <div class="contaner-propio">
+                      <div class="row">
+                          <div class="footer-col col-md-4">
+                              <h3>Location</h3>
+                              <p class="text-light hover-falso">8093 Schaden Ridge Apt. 849<br>Kentucky</p>
+                              <p>If you want to know where we are, here you can see the address, we hope to see you soon.</p>
+                          </div>
+                          <div class="footer-col col-md-4">
+                              <h3>Around the Web</h3>
+                              <ul class="list-inline d-flex justify-content-evenly">
+                                  <li>
+                                      <a href="https://www.facebook.com/" target="_blank" class="btn-social btn-outline" alt="Behance" title="Behance">
+                                        <i class="bi bi-facebook"></i>
+                                          
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a href="https://www.instagram.com/" target="_blank" class="btn-social btn-outline" alt="Codepen" title="Codepen">
+                                        <i class="bi bi-instagram"></i>
+                                          
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a href="https://twitter.com/" target="_blank" class="btn-social btn-outline" 
+                                      alt="Twitter" title="Twitter">
+                                      <i class="bi bi-twitter"></i>
+                                          
+                                      </a>
+                                  </li>
+                              </ul>
+                              <p>If you want to see our facilities and follow us on our networks, click on the icons!</p>
+                          </div>
+                          <div class="footer-col col-md-4">
+                              <h3>Contact Info</h3>
+                              <ul class="list-inline d-flex justify-content-evenly">
+                                  <li>
+                                      <a href="tel: +1.443.743.6471" class="btn-social btn-outline">
+                                      <i class="bi bi-telephone-fill"></i><br>
+                                          <!-- <span class="sr-only">Phone</span> -->
+                                      </a>
+                                  </li>
+                                  <li>
+                                      <a href="mailto:mindhub_bank@gmail.com" class="btn-social btn-outline">
+                                      <i class="bi bi-envelope-fill"></i><br>
+                                          <!-- <span class="sr-only">Email</span> -->
+                                      </a>
+                                  </li>
+                              </ul>
+                              <p>If you want to ask, please use the contact telephone number or this E-mail.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="footer-below">
+                  <div class="contaner-propio">
+                      <div class="row">
+                          <div class="col-lg-12">
+                              Proyect created by <a href="https://github.com/tomaspmind?tab=repositories" target="_blank" class="text-light text-decoration-underline">Tomas Perez</a>
+                              <br>
+                              Copyright &copy; COHORT 41
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </footer>
             </div>
           </div>
     </main>

@@ -282,8 +282,11 @@ createApp({
             accounts: [],
             all_transactions: [],
             dataLoans: [],
-            dataCards: []
-            
+            dataCards: [],
+            accountNumber: "",
+            accountDestiny: "",
+            accountType: "",
+            newList: []
         }
     },
 
@@ -334,7 +337,7 @@ createApp({
 
         logout(){
             axios.post('/api/logout').then(response =>  Swal.fire({
-              title: `Acepted (Codigo: 200)`,
+              title: `Have a good day ${this.client.firstName}`,
               icon: "success",
               showConfirmButton: false,
               timer: 1000,
@@ -344,9 +347,10 @@ createApp({
         },
 
         CreateNewAccount(){
-            axios.post('/api/clients/current/accounts')
+            axios.post('/api/clients/current/accounts', `accountType=${this.accountType}`)
             .then(response => {
                 this.loadData();
+                location.href = "/web/accounts.html"
             })
             .catch(error => {
                 this.error = error.response.data.message;
@@ -355,7 +359,6 @@ createApp({
         alertLogout(){
           Swal.fire({
             title: 'Are you sure you want to Log Out?',
-            text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -366,7 +369,56 @@ createApp({
                 this.logout();
             }
           })
-        }
+        },
+        alertDeleteAccount(){
+          Swal.fire({
+            title: 'Are you sure you want to Delete this account?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Delete'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                this.deleteAccount();
+            }
+          })
+        },
+        deleteAccount(){
+          axios.patch("/api/clients/current/accounts", `accountNumber=${this.accountNumber}&accountDestiny=${this.accountDestiny}`)
+          .then(response => {
+            Swal.fire({
+                title: `${response.data}`,
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                }).then(response => {
+                    location.href = '/web/accounts.html';
+                    this.loadData()
+                })
+        })
+        },
+        alertCreateAccount(){
+          Swal.fire({
+            title: 'Are you sure you want to create a new Account?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, please'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                this.CreateNewAccount();
+            }
+          })
+        },
+        changed(){
+          this.newList = this.accounts.filter(element => element.number !== this.accountNumber)
+          return this.newList
+      }
     },
 
 }).mount('#app')

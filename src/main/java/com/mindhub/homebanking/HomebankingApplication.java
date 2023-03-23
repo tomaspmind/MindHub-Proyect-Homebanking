@@ -1,29 +1,18 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.rest.webmvc.json.JacksonMappingAwareSortTranslator;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	/*@Autowired
+	private PasswordEncoder passwordEncoder;*/
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
 
@@ -38,26 +27,26 @@ public class HomebankingApplication {
 			LocalDate nowOnlyDay = LocalDate.now();
 			LocalDate expirationDay = LocalDate.now().plusYears(5);
 
-			Account account1 = new Account("VIN001", now, 5000.0);
-			Account account2 = new Account("VIN002", tomorrow, 7500.0);
-			Account account3 = new Account("VIN003",now,10000.0);
-			Account account4 = new Account("VIN004", tomorrow, 15000.0);
+			Account account1 = new Account("VIN001", now, 5000.0, true);
+			Account account2 = new Account("VIN002", tomorrow, 7500.0, true);
+			Account account3 = new Account("VIN003",now,10000.0,true);
+			Account account4 = new Account("VIN004", tomorrow, 15000.0,true);
 
-			Transaction transaction1 = new Transaction(TransactionType.CREDIT, 2000.0,"Sale of jacket",LocalDateTime.now().minusHours(3));
-			Transaction transaction2 = new Transaction(TransactionType.CREDIT, 1500.0,"Sale of footwear",LocalDateTime.now().minusDays(2));
-			Transaction transaction3 = new Transaction(TransactionType.CREDIT, 3000.0,"Sale of jeweler's",LocalDateTime.now().minusMinutes(30));
-			Transaction transaction4 = new Transaction(TransactionType.DEBIT, 1000.0,"Purchase of papers",LocalDateTime.now().minusHours(10));
-			Transaction transaction5 = new Transaction(TransactionType.DEBIT, 500.0,"Purchase of snacks",LocalDateTime.now().minusSeconds(40));
+			Transaction transaction1 = new Transaction(TransactionType.CREDIT, 2000.0,"Sale of jacket",LocalDateTime.now().minusDays(10),2000.0);
+			Transaction transaction2 = new Transaction(TransactionType.CREDIT, 1500.0,"Sale of footwear",LocalDateTime.now().minusDays(8),3500.0);
+			Transaction transaction3 = new Transaction(TransactionType.CREDIT, 3000.0,"Sale of jeweler's",LocalDateTime.now().minusDays(6),6500.0);
+			Transaction transaction4 = new Transaction(TransactionType.DEBIT, 1000.0,"Purchase of papers",LocalDateTime.now().minusDays(5),5500.0);
+			Transaction transaction5 = new Transaction(TransactionType.DEBIT, 500.0,"Purchase of snacks",LocalDateTime.now().minusDays(2),5000.0);
 
-			Transaction transaction6 = new Transaction(TransactionType.CREDIT, 7000.0,"Sale of jacket",LocalDateTime.now().minusDays(4));
-			Transaction transaction7 = new Transaction(TransactionType.CREDIT, 8500.0,"Sale of footwear",LocalDateTime.now().minusDays(1));
-			Transaction transaction8 = new Transaction(TransactionType.DEBIT, 2500.0,"Purchase of keyboard",LocalDateTime.now().minusHours(7));
-			Transaction transaction9 = new Transaction(TransactionType.DEBIT, 3500.0,"Purchase of microphone",LocalDateTime.now().minusMinutes(50));
-			Transaction transaction10 = new Transaction(TransactionType.DEBIT, 2500.0,"Purchase of mouse",LocalDateTime.now().minusHours(1));
+			Transaction transaction6 = new Transaction(TransactionType.CREDIT, 7000.0,"Sale of jacket",LocalDateTime.now().minusDays(9),7000.0);
+			Transaction transaction7 = new Transaction(TransactionType.CREDIT, 8500.0,"Sale of footwear",LocalDateTime.now().minusDays(8),15500.0);
+			Transaction transaction8 = new Transaction(TransactionType.DEBIT, 2500.0,"Purchase of keyboard",LocalDateTime.now().minusDays(7),13000.0);
+			Transaction transaction9 = new Transaction(TransactionType.DEBIT, 3500.0,"Purchase of microphone",LocalDateTime.now().minusDays(5),9500.0);
+			Transaction transaction10 = new Transaction(TransactionType.DEBIT, 2000.0,"Purchase of mouse",LocalDateTime.now().minusDays(3),7500.0);
 
-			Loan loan1 = new Loan("Mortgage", 500000, List.of(12,24,36,48,60));
-			Loan loan2 = new Loan("Personal", 100000, List.of(6,12,24));
-			Loan loan3 = new Loan("Automotive", 300000, List.of(6,12,24,36));
+			Loan loan1 = new Loan("Mortgage", 500000, List.of(12,24,36,48,60),1.10,List.of(1.0,1.05,1.10,1.15,1.20));
+			Loan loan2 = new Loan("Personal", 100000, List.of(6,12,24),1.20,List.of(1.0,1.05,1.10));
+			Loan loan3 = new Loan("Automotive", 300000, List.of(6,12,24,36),1.15,List.of(1.0,1.05,1.10,1.15));
 
 			ClientLoan clientLoan1 = new ClientLoan(400000.0, 60, melba, loan1);
 			ClientLoan clientLoan2 = new ClientLoan(50000.0,12,melba, loan2);
@@ -131,22 +120,7 @@ public class HomebankingApplication {
 			cardRepository.save(card4);
 
 		};
-	}
-
-	public String cvv() {
-		int cvv = (int) (Math.random() * 999);
-		String cvvCompletado = String.format("%03d", cvv);
-		return cvvCompletado;
-	}
-
-	public static String numbers(){
-		int first = (int) (Math.random()*(9999 - 1000)+1000);
-		int second = (int) (Math.random()*(9999 - 1000)+1000);
-		int tercero = (int) (Math.random()*(9999 - 1000)+1000);
-		int cuarto = (int) (Math.random()*(9999 - 1000)+1000);
-		String numbers = first + "-" + second + "-" + tercero + "-" + cuarto;
-		return numbers;
-	}
+	}*/
 
 
 }

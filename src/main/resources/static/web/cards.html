@@ -22,7 +22,7 @@
                 <ul class="list-unstyled components">
                 <p class="border-bottom border-dark fs-4">Cards</p>
                 <li>
-                    <a href="./create-cards.html" class="article" v-if="dataCards.length < 6">AddCard</a>
+                    <a href="./create-cards.html" class="article" v-if="dataCards.length < 6">Here you can add Cards</a>
                 </li>
                 <li>
                     <a href="http://localhost:8080/web/accounts.html#">Accounts</a>
@@ -30,26 +30,16 @@
                 <li>
                     <a :href='"account.html?id="+transactionId'>Transactions</a>
                 </li>
-                <li>
-                    <div>
-                        <label for="tipoTransferencia">Loan Type:</label>
-                        <select id="tipoTransferencia" v-model="number">
-                            <option value="" disabled selected>Select Card</option>
-                            <option v-for="card of dataCards" :value="card.number">{{card.number}} - {{card.type}}/{{card.color}}</option>
-                        </select>
-                        <button @click="alertDeleteCard">Delete</button>
-                    </div>
-                </li>
-                <li>
+                <!-- <li>
                     <a href="#">Withdraw money</a>
-                </li>
+                </li> -->
                 </ul>
                 
-                <ul class="list-unstyled CTAs">
+                <!-- <ul class="list-unstyled CTAs">
                 <li><a href="#" class="article">Reports</a></li>
-                </ul>
+                </ul> -->
             </nav>
-            <div id="content">
+            <div id="content" class="fondo">
             <nav class="navbar navbar-default sticky-top">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -60,26 +50,26 @@
                     </div>
                     <div class="d-flex gap-3">
                         <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle nada" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{client.firstName}} {{client.lastName}} <i class="bi bi-person-fill"></i></a>
+                            <a class="nav-link dropdown-toggle nada" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" v-cloak>{{client.firstName}} {{client.lastName}} <i class="bi bi-person-fill"></i></a>
                             <ul class="dropdown-menu nada">
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-person-fill"></i> User profile</a></li>
+                                <!-- <li><a class="dropdown-item" href="#"><i class="bi bi-person-fill"></i> User profile</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-person-vcard"></i> User information</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-shield-lock"></i> Segurity</a></li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li><hr class="dropdown-divider"></li> -->
                                 <li><a @click="logout" class="dropdown-item" href="#"><i class="bi bi-power"></i> Disconect</a></li>
                             </ul>
                         </div>
                         <a href="#"><i style="color: black;" class="bi bi-calculator-fill"></i></a>
                         <a href="#"><i style="color: black;" class="bi bi-calendar3"></i></a>
-                        <a href="#"><i style="color: black;" class="bi bi-bell"></i></a>
+                        <!-- <a href="#"><i style="color: black;" class="bi bi-bell"></i></a> -->
                     </div>
                 </div>
             </nav>
-            <h2 class="text-center">{{client.firstName}} {{client.lastName}} here are your Cards</h2>
+            <h2 class="text-center letra-titulos2" v-cloak>{{client.firstName}} {{client.lastName}} here are your Cards</h2>
             <div class="line"></div>
 
-            <h4>Credit cards:</h4>
+            <h4 class="letra-titulos2">Credit cards:</h4>
             <div class="line"></div>
     <div class="todasLasCards gap-2" v-if="dataCards.length > 0">
         <div v-for="card of dataCards">
@@ -100,7 +90,7 @@
                                     <path class="visa" d="M61.9 53.1l8.9-52.2h14.2l-8.9 52.2zm65.8-50.9c-2.8-1.1-7.2-2.2-12.7-2.2-14.1 0-24 7.1-24 17.2-.1 7.5 7.1 11.7 12.5 14.2 5.5 2.6 7.4 4.2 7.4 6.5 0 3.5-4.4 5.1-8.5 5.1-5.7 0-8.7-.8-13.4-2.7l-2-.9-2 11.7c3.3 1.5 9.5 2.7 15.9 2.8 15 0 24.7-7 24.8-17.8.1-5.9-3.7-10.5-11.9-14.2-5-2.4-8-4-8-6.5 0-2.2 2.6-4.5 8.1-4.5 4.7-.1 8 .9 10.6 2l1.3.6 1.9-11.3M164.2 1h-11c-3.4 0-6 .9-7.5 4.3l-21.1 47.8h14.9s2.4-6.4 3-7.8h18.2c.4 1.8 1.7 7.8 1.7 7.8h13.2l-11.4-52.1m-17.5 33.6c1.2-3 5.7-14.6 5.7-14.6-.1.1 1.2-3 1.9-5l1 4.5s2.7 12.5 3.3 15.1h-11.9zm-96.7-33.7l-14 35.6-1.5-7.2c-2.5-8.3-10.6-17.4-19.6-21.9l12.7 45.7h15.1l22.4-52.2h-15.1" />
                                     <path fill="#F7A600" d="M23.1.9h-22.9l-.2 1.1c17.9 4.3 29.7 14.8 34.6 27.3l-5-24c-.9-3.3-3.4-4.3-6.5-4.4" />
                                 </svg>
-                                <div class="typeCard">{{card.type}} CARD</div>
+                                <div class="typeCard" v-cloak>{{card.type}} CARD</div>
                                 <div class="chip">
                                     <div class="pin"></div>
                                     <div class="pin"></div>
@@ -109,12 +99,12 @@
                                     <div class="pin"></div>
                                     <div class="pin"></div>
                                 </div>
-                                <div class="card-holder text-dark">{{card.cardholder}}</div>
-                                <div class="numbersCard">{{card.number}}</div>
-                                <div class="titulo-fecha1">Start</div>
-                                <div class="fecha1">{{justDay(card.fromDate)}}</div>
-                                <div class="titulo-fecha2">Expires</div>
-                                <div class="fecha2">{{justDay(card.thruDate)}}</div>
+                                <div v-cloak class="card-holder text-dark">{{card.cardholder}}</div>
+                                <div v-cloak class="numbersCard">{{card.number}}</div>
+                                <div v-cloak class="titulo-fecha1">Start</div>
+                                <div v-cloak class="fecha1">{{justDay(card.fromDate)}}</div>
+                                <div v-cloak class="titulo-fecha2">Expires</div>
+                                <div v-cloak class="fecha2">{{justDay(card.thruDate)}}</div>
                                 <h3 v-if="card.thruDate <= currentDay" class="cartelVencido text-dark">expired</h3>
                             </div>
                             <div class="back dorado">
@@ -122,9 +112,9 @@
                                 <div class="strip-black"></div> <!-- linea negra -->
                                 <div class="master">
                                     <div class="strip-white"></div>
-                                    <div class="cvv">{{card.cvv}}</div>
+                                    <div class="cvv" v-cloak>{{card.cvv}}</div>
                                     <div class="strip-cvv"></div>
-                                    <div class="master-text">{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
+                                    <div class="master-text" v-cloak>{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +133,7 @@
                                     <path style="color: #fff !important;" class="visa" d="M61.9 53.1l8.9-52.2h14.2l-8.9 52.2zm65.8-50.9c-2.8-1.1-7.2-2.2-12.7-2.2-14.1 0-24 7.1-24 17.2-.1 7.5 7.1 11.7 12.5 14.2 5.5 2.6 7.4 4.2 7.4 6.5 0 3.5-4.4 5.1-8.5 5.1-5.7 0-8.7-.8-13.4-2.7l-2-.9-2 11.7c3.3 1.5 9.5 2.7 15.9 2.8 15 0 24.7-7 24.8-17.8.1-5.9-3.7-10.5-11.9-14.2-5-2.4-8-4-8-6.5 0-2.2 2.6-4.5 8.1-4.5 4.7-.1 8 .9 10.6 2l1.3.6 1.9-11.3M164.2 1h-11c-3.4 0-6 .9-7.5 4.3l-21.1 47.8h14.9s2.4-6.4 3-7.8h18.2c.4 1.8 1.7 7.8 1.7 7.8h13.2l-11.4-52.1m-17.5 33.6c1.2-3 5.7-14.6 5.7-14.6-.1.1 1.2-3 1.9-5l1 4.5s2.7 12.5 3.3 15.1h-11.9zm-96.7-33.7l-14 35.6-1.5-7.2c-2.5-8.3-10.6-17.4-19.6-21.9l12.7 45.7h15.1l22.4-52.2h-15.1" />
                                     <path style="color: white !important;" fill="#F7A600" d="M23.1.9h-22.9l-.2 1.1c17.9 4.3 29.7 14.8 34.6 27.3l-5-24c-.9-3.3-3.4-4.3-6.5-4.4" />
                                 </svg>
-                                <div class="typeCard">{{card.type}} CARD</div>
+                                <div class="typeCard" v-cloak>{{card.type}} CARD</div>
                                 <div class="chip">
                                     <div class="pin"></div>
                                     <div class="pin"></div>
@@ -152,12 +142,12 @@
                                     <div class="pin"></div>
                                     <div class="pin"></div>
                                 </div>
-                                <div class="card-holder text-light">{{card.cardholder}}</div>
-                                <div class="numbersCard">{{card.number}}</div>
-                                <div class="titulo-fecha1">Start</div>
-                                <div class="fecha1">{{justDay(card.fromDate)}}</div>
-                                <div class="titulo-fecha2">Expires</div>
-                                <div class="fecha2">{{justDay(card.thruDate)}}</div>
+                                <div v-cloak class="card-holder text-light">{{card.cardholder}}</div>
+                                <div v-cloak class="numbersCard">{{card.number}}</div>
+                                <div v-cloak class="titulo-fecha1">Start</div>
+                                <div v-cloak class="fecha1">{{justDay(card.fromDate)}}</div>
+                                <div v-cloak class="titulo-fecha2">Expires</div>
+                                <div v-cloak class="fecha2">{{justDay(card.thruDate)}}</div>
                                 <h3 v-if="card.thruDate <= currentDay" class="cartelVencido">expired</h3>
                             </div>
                             <div class="back titanium">
@@ -165,9 +155,9 @@
                                 <div class="strip-black"></div> <!-- linea negra -->
                                 <div class="master">
                                     <div class="strip-white"></div>
-                                    <div class="cvv text-dark">{{card.cvv}}</div>
+                                    <div class="cvv text-dark" v-cloak>{{card.cvv}}</div>
                                     <div class="strip-cvv"></div>
-                                    <div class="master-text">{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
+                                    <div class="master-text" v-cloak>{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +180,7 @@
                                     <path class="visa" d="M61.9 53.1l8.9-52.2h14.2l-8.9 52.2zm65.8-50.9c-2.8-1.1-7.2-2.2-12.7-2.2-14.1 0-24 7.1-24 17.2-.1 7.5 7.1 11.7 12.5 14.2 5.5 2.6 7.4 4.2 7.4 6.5 0 3.5-4.4 5.1-8.5 5.1-5.7 0-8.7-.8-13.4-2.7l-2-.9-2 11.7c3.3 1.5 9.5 2.7 15.9 2.8 15 0 24.7-7 24.8-17.8.1-5.9-3.7-10.5-11.9-14.2-5-2.4-8-4-8-6.5 0-2.2 2.6-4.5 8.1-4.5 4.7-.1 8 .9 10.6 2l1.3.6 1.9-11.3M164.2 1h-11c-3.4 0-6 .9-7.5 4.3l-21.1 47.8h14.9s2.4-6.4 3-7.8h18.2c.4 1.8 1.7 7.8 1.7 7.8h13.2l-11.4-52.1m-17.5 33.6c1.2-3 5.7-14.6 5.7-14.6-.1.1 1.2-3 1.9-5l1 4.5s2.7 12.5 3.3 15.1h-11.9zm-96.7-33.7l-14 35.6-1.5-7.2c-2.5-8.3-10.6-17.4-19.6-21.9l12.7 45.7h15.1l22.4-52.2h-15.1" />
                                     <path fill="#F7A600" d="M23.1.9h-22.9l-.2 1.1c17.9 4.3 29.7 14.8 34.6 27.3l-5-24c-.9-3.3-3.4-4.3-6.5-4.4" />
                                 </svg>
-                                <div class="typeCard">{{card.type}} CARD</div>
+                                <div class="typeCard" v-cloak>{{card.type}} CARD</div>
                                 <div class="chip">
                                     <div class="pin"></div>
                                     <div class="pin"></div>
@@ -199,12 +189,12 @@
                                     <div class="pin"></div>
                                     <div class="pin"></div>
                                 </div>
-                                <div class="card-holder text-light">{{card.cardholder}}</div>
-                                <div class="numbersCard">{{card.number}}</div>
-                                <div class="titulo-fecha1">Start</div>
-                                <div class="fecha1">{{justDay(card.fromDate)}}</div>
-                                <div class="titulo-fecha2">Expires</div>
-                                <div class="fecha2">{{justDay(card.thruDate)}}</div>
+                                <div v-cloak class="card-holder text-light">{{card.cardholder}}</div>
+                                <div v-cloak class="numbersCard">{{card.number}}</div>
+                                <div v-cloak class="titulo-fecha1">Start</div>
+                                <div v-cloak class="fecha1">{{justDay(card.fromDate)}}</div>
+                                <div v-cloak class="titulo-fecha2">Expires</div>
+                                <div v-cloak class="fecha2">{{justDay(card.thruDate)}}</div>
                                 <h3 v-if="card.thruDate <= currentDay" class="cartelVencido">expired</h3>
                             </div>
                             <div class="back silver">
@@ -212,9 +202,9 @@
                                 <div class="strip-black"></div> <!-- linea negra -->
                                 <div class="master">
                                     <div class="strip-white"></div>
-                                    <div class="cvv text-dark">{{card.cvv}}</div>
+                                    <div class="cvv text-dark" v-cloak>{{card.cvv}}</div>
                                     <div class="strip-cvv"></div>
-                                    <div class="master-text">{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
+                                    <div class="master-text" v-cloak>{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +218,39 @@
             <h2 class="d-flex justify-content-center">You have no credit cards</h2>
     </div>
     <div class="line"></div>
-    <h4>Debit cards:</h4>
+            <div class="d-flex justify-content-evenly flex-wrap gap-1">
+                <!-- <button class="btn btn-danger botones-hover" @click="alertCreateAccount">Create Card</button> -->
+                <button type="button" class="btn btn-primary botones-hover" data-bs-toggle="modal" data-bs-target="#exampleModal5">Here you can delete a Card</button>
+            </div>
+            <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Choose the options to delete</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="dentroModal">
+                            <label for="extra1">Admin email:</label>
+                            <input type="email" name="" id="extra1" disabled placeholder="admin@mindhub.com" class="modal-edit">
+                            <label for="extra2">Description why you want to delete the card:</label>
+                            <input type="text" name="" id="extra2" class="modal-edit">
+                            <label for="tipoTransferencia6">Loan Type:</label>
+                        <select id="tipoTransferencia6" v-model="number" class="modal-edit">
+                            <option value="" disabled selected>Select Card</option>
+                            <option v-for="card of dataCards" :value="card.number" v-cloak>{{card.number}} - {{card.type}}/{{card.color}}</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button @click="alertDeleteCard" type="button" class="btn btn-primary">Click here for Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    <div class="line"></div>
+    <h4 class="letra-titulos2">Debit cards:</h4>
     <div class="line"></div>
     <div class="todasLasCards gap-2" v-if="dataCards.length > 0">
         <div v-for="card of dataCards">
@@ -249,7 +271,7 @@
                                     <path class="visa" d="M61.9 53.1l8.9-52.2h14.2l-8.9 52.2zm65.8-50.9c-2.8-1.1-7.2-2.2-12.7-2.2-14.1 0-24 7.1-24 17.2-.1 7.5 7.1 11.7 12.5 14.2 5.5 2.6 7.4 4.2 7.4 6.5 0 3.5-4.4 5.1-8.5 5.1-5.7 0-8.7-.8-13.4-2.7l-2-.9-2 11.7c3.3 1.5 9.5 2.7 15.9 2.8 15 0 24.7-7 24.8-17.8.1-5.9-3.7-10.5-11.9-14.2-5-2.4-8-4-8-6.5 0-2.2 2.6-4.5 8.1-4.5 4.7-.1 8 .9 10.6 2l1.3.6 1.9-11.3M164.2 1h-11c-3.4 0-6 .9-7.5 4.3l-21.1 47.8h14.9s2.4-6.4 3-7.8h18.2c.4 1.8 1.7 7.8 1.7 7.8h13.2l-11.4-52.1m-17.5 33.6c1.2-3 5.7-14.6 5.7-14.6-.1.1 1.2-3 1.9-5l1 4.5s2.7 12.5 3.3 15.1h-11.9zm-96.7-33.7l-14 35.6-1.5-7.2c-2.5-8.3-10.6-17.4-19.6-21.9l12.7 45.7h15.1l22.4-52.2h-15.1" />
                                     <path fill="#F7A600" d="M23.1.9h-22.9l-.2 1.1c17.9 4.3 29.7 14.8 34.6 27.3l-5-24c-.9-3.3-3.4-4.3-6.5-4.4" />
                                 </svg>
-                                <div class="typeCard">{{card.type}} CARD</div>
+                                <div class="typeCard" v-cloak>{{card.type}} CARD</div>
                                 <div class="chip">
                                     <div class="pin"></div>
                                     <div class="pin"></div>
@@ -258,12 +280,12 @@
                                     <div class="pin"></div>
                                     <div class="pin"></div>
                                 </div>
-                                <div class="card-holder text-dark">{{card.cardholder}}</div>
-                                <div class="numbersCard">{{card.number}}</div>
-                                <div class="titulo-fecha1">Start</div>
-                                <div class="fecha1">{{justDay(card.fromDate)}}</div>
-                                <div class="titulo-fecha2">Expires</div>
-                                <div class="fecha2">{{justDay(card.thruDate)}}</div>
+                                <div v-cloak class="card-holder text-dark">{{card.cardholder}}</div>
+                                <div v-cloak class="numbersCard">{{card.number}}</div>
+                                <div v-cloak class="titulo-fecha1">Start</div>
+                                <div v-cloak class="fecha1">{{justDay(card.fromDate)}}</div>
+                                <div v-cloak class="titulo-fecha2">Expires</div>
+                                <div v-cloak class="fecha2">{{justDay(card.thruDate)}}</div>
                                 <h3 v-if="card.thruDate <= currentDay" class="cartelVencido text-dark">expired</h3>
                             </div>
                             <div class="back dorado">
@@ -271,9 +293,9 @@
                                 <div class="strip-black"></div> <!-- linea negra -->
                                 <div class="master">
                                     <div class="strip-white"></div>
-                                    <div class="cvv">{{card.cvv}}</div>
+                                    <div class="cvv" v-cloak>{{card.cvv}}</div>
                                     <div class="strip-cvv"></div>
-                                    <div class="master-text">{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
+                                    <div class="master-text" v-cloak>{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
                                 </div>
                             </div>
                         </div>
@@ -292,7 +314,7 @@
                                     <path style="color: #fff !important;" class="visa" d="M61.9 53.1l8.9-52.2h14.2l-8.9 52.2zm65.8-50.9c-2.8-1.1-7.2-2.2-12.7-2.2-14.1 0-24 7.1-24 17.2-.1 7.5 7.1 11.7 12.5 14.2 5.5 2.6 7.4 4.2 7.4 6.5 0 3.5-4.4 5.1-8.5 5.1-5.7 0-8.7-.8-13.4-2.7l-2-.9-2 11.7c3.3 1.5 9.5 2.7 15.9 2.8 15 0 24.7-7 24.8-17.8.1-5.9-3.7-10.5-11.9-14.2-5-2.4-8-4-8-6.5 0-2.2 2.6-4.5 8.1-4.5 4.7-.1 8 .9 10.6 2l1.3.6 1.9-11.3M164.2 1h-11c-3.4 0-6 .9-7.5 4.3l-21.1 47.8h14.9s2.4-6.4 3-7.8h18.2c.4 1.8 1.7 7.8 1.7 7.8h13.2l-11.4-52.1m-17.5 33.6c1.2-3 5.7-14.6 5.7-14.6-.1.1 1.2-3 1.9-5l1 4.5s2.7 12.5 3.3 15.1h-11.9zm-96.7-33.7l-14 35.6-1.5-7.2c-2.5-8.3-10.6-17.4-19.6-21.9l12.7 45.7h15.1l22.4-52.2h-15.1" />
                                     <path style="color: white !important;" fill="#F7A600" d="M23.1.9h-22.9l-.2 1.1c17.9 4.3 29.7 14.8 34.6 27.3l-5-24c-.9-3.3-3.4-4.3-6.5-4.4" />
                                 </svg>
-                                <div class="typeCard">{{card.type}} CARD</div>
+                                <div class="typeCard" v-cloak>{{card.type}} CARD</div>
                                 <div class="chip">
                                     <div class="pin"></div>
                                     <div class="pin"></div>
@@ -301,12 +323,12 @@
                                     <div class="pin"></div>
                                     <div class="pin"></div>
                                 </div>
-                                <div class="card-holder text-light">{{card.cardholder}}</div>
-                                <div class="numbersCard">{{card.number}}</div>
-                                <div class="titulo-fecha1">Start</div>
-                                <div class="fecha1">{{justDay(card.fromDate)}}</div>
-                                <div class="titulo-fecha2">Expires</div>
-                                <div class="fecha2">{{justDay(card.thruDate)}}</div>
+                                <div v-cloak class="card-holder text-light">{{card.cardholder}}</div>
+                                <div v-cloak class="numbersCard">{{card.number}}</div>
+                                <div v-cloak class="titulo-fecha1">Start</div>
+                                <div v-cloak class="fecha1">{{justDay(card.fromDate)}}</div>
+                                <div v-cloak class="titulo-fecha2">Expires</div>
+                                <div v-cloak class="fecha2">{{justDay(card.thruDate)}}</div>
                                 <h3 v-if="card.thruDate <= currentDay" class="cartelVencido">expired</h3>
                             </div>
                             <div class="back titanium">
@@ -314,9 +336,9 @@
                                 <div class="strip-black"></div> <!-- linea negra -->
                                 <div class="master">
                                     <div class="strip-white"></div>
-                                    <div class="cvv text-dark">{{card.cvv}}</div>
+                                    <div class="cvv text-dark" v-cloak>{{card.cvv}}</div>
                                     <div class="strip-cvv"></div>
-                                    <div class="master-text">{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
+                                    <div class="master-text" v-cloak>{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
                                 </div>
                             </div>
                         </div>
@@ -339,7 +361,7 @@
                                     <path class="visa" d="M61.9 53.1l8.9-52.2h14.2l-8.9 52.2zm65.8-50.9c-2.8-1.1-7.2-2.2-12.7-2.2-14.1 0-24 7.1-24 17.2-.1 7.5 7.1 11.7 12.5 14.2 5.5 2.6 7.4 4.2 7.4 6.5 0 3.5-4.4 5.1-8.5 5.1-5.7 0-8.7-.8-13.4-2.7l-2-.9-2 11.7c3.3 1.5 9.5 2.7 15.9 2.8 15 0 24.7-7 24.8-17.8.1-5.9-3.7-10.5-11.9-14.2-5-2.4-8-4-8-6.5 0-2.2 2.6-4.5 8.1-4.5 4.7-.1 8 .9 10.6 2l1.3.6 1.9-11.3M164.2 1h-11c-3.4 0-6 .9-7.5 4.3l-21.1 47.8h14.9s2.4-6.4 3-7.8h18.2c.4 1.8 1.7 7.8 1.7 7.8h13.2l-11.4-52.1m-17.5 33.6c1.2-3 5.7-14.6 5.7-14.6-.1.1 1.2-3 1.9-5l1 4.5s2.7 12.5 3.3 15.1h-11.9zm-96.7-33.7l-14 35.6-1.5-7.2c-2.5-8.3-10.6-17.4-19.6-21.9l12.7 45.7h15.1l22.4-52.2h-15.1" />
                                     <path fill="#F7A600" d="M23.1.9h-22.9l-.2 1.1c17.9 4.3 29.7 14.8 34.6 27.3l-5-24c-.9-3.3-3.4-4.3-6.5-4.4" />
                                 </svg>
-                                <div class="typeCard">{{card.type}} CARD</div>
+                                <div class="typeCard" v-cloak>{{card.type}} CARD</div>
                                 <div class="chip">
                                     <div class="pin"></div>
                                     <div class="pin"></div>
@@ -348,12 +370,12 @@
                                     <div class="pin"></div>
                                     <div class="pin"></div>
                                 </div>
-                                <div class="card-holder text-light">{{card.cardholder}}</div>
-                                <div class="numbersCard">{{card.number}}</div>
-                                <div class="titulo-fecha1">Start</div>
-                                <div class="fecha1">{{justDay(card.fromDate)}}</div>
-                                <div class="titulo-fecha2">Expires</div>
-                                <div class="fecha2">{{justDay(card.thruDate)}}</div>
+                                <div v-cloak class="card-holder text-light">{{card.cardholder}}</div>
+                                <div v-cloak class="numbersCard">{{card.number}}</div>
+                                <div v-cloak class="titulo-fecha1">Start</div>
+                                <div v-cloak class="fecha1">{{justDay(card.fromDate)}}</div>
+                                <div v-cloak class="titulo-fecha2">Expires</div>
+                                <div v-cloak class="fecha2">{{justDay(card.thruDate)}}</div>
                                 <h3 v-if="card.thruDate <= currentDay" class="cartelVencido">expired</h3>
                             </div>
                             <div class="back silver">
@@ -361,9 +383,9 @@
                                 <div class="strip-black"></div> <!-- linea negra -->
                                 <div class="master">
                                     <div class="strip-white"></div>
-                                    <div class="cvv text-dark">{{card.cvv}}</div>
+                                    <div class="cvv text-dark" v-cloak>{{card.cvv}}</div>
                                     <div class="strip-cvv"></div>
-                                    <div class="master-text">{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
+                                    <div class="master-text" v-cloak>{{card.cardholder}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quibusdam corrupti tempore fugit velit laborum quam error illum? Omnis pariatur rerum ipsam nostrum porro, quis inventore animi perferendis quae at!</div>
                                 </div>
                             </div>
                         </div>

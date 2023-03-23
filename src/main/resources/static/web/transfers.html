@@ -48,31 +48,31 @@
                           <option value="tercero">Another account</option>
                       </select>
                   </div>
-                  <div v-if="tipoTransferencia === 'cuentaPropia'" class="d-flex gap-3 justify-content-between flex-wrap">
-                    <div class="d-flex gap-1">
+                  <div v-if="tipoTransferencia === 'cuentaPropia'" class="d-flex gap-3 justify-content-between flex-wrap flex-column" >
+                    <div class="d-flex gap-1 flex-column">
                       <label for="cuentaDestino" class="paddingSimple">Origin Account:</label>
-                      <select id="cuentaDestino" v-model="cuentaDestino">
+                      <select id="cuentaDestino" @change="changed" v-model="cuentaDestino">
                           <option value="" disabled selected>Select one Account</option>
-                          <option v-for="account in accounts" :key="account" :value="account.number">{{ account.number }}</option>
+                          <option v-for="account in accounts" :key="account" :value="account.number" v-cloak>{{ account.number }}</option>
                       </select>
                     </div>
-                    <div class="d-flex gap-1">
+                    <div class="d-flex gap-1 flex-column">
                       <label for="cuentaDestino2" class="paddingSimple">Destination account:</label>
                       <select id="cuentaDestino2" v-model="cuentaDestino2">
                           <option value="" disabled selected>Select another Account</option>
-                          <option v-for="account in accounts" :key="account" :value="account.number">{{ account.number }}</option>
+                          <option v-for="account in newList" :key="account" :value="account.number" v-cloak>{{ account.number }}</option>
                       </select>
                     </div>
                   </div>
-                  <div v-if="tipoTransferencia === 'tercero'" class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-                    <div class="d-flex gap-3">
+                  <div v-if="tipoTransferencia === 'tercero'" class="d-flex align-items-center justify-content-between flex-wrap gap-3 flex-column">
+                    <div class="d-flex gap-1 flex-column w-100">
                       <label for="cuentaDestino" class="paddingSimple">Origin Account:</label>
-                      <select id="cuentaDestino" v-model="cuentaDestino">
+                      <select id="cuentaDestino"  v-model="cuentaDestino">
                           <option value="" disabled selected>Select one Account</option>
-                          <option v-for="account in accounts" :key="account" :value="account.number">{{ account.number }}</option>
+                          <option v-for="account in accounts" :key="account" :value="account.number" v-cloak>{{ account.number }}</option>
                       </select>
                     </div>
-                    <div class="d-flex gap-3">
+                    <div class="d-flex gap-1 flex-column w-100">
                       <label for="numCuenta">Destination account:</label>
                       <input type="text" id="numCuenta" v-model="cuentaDestino2" class="cambioDeWidth" placeholder="Write the account number">
                     </div>
@@ -85,7 +85,7 @@
                       <label for="descripcion">Description:</label>
                       <input type="text" id="descripcion" v-model="description" placeholder="Description of the transaction">
                   </div>
-                  <div class="d-flex gap-1">
+                  <div class="d-flex gap-1 media">
                       <button type="submit" @click="alertTranfer">Click to transfer</button>
                       <button type="submit" @click="cleanForm">Clean Form</button>
                   </div>

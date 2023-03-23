@@ -44,7 +44,7 @@
   }
   
   .company-info {
-    background: #b61b1b;
+    background: #283044;
     color: white;
   }
   
@@ -131,6 +131,10 @@
   margin-top: 7px;
 }
 
+[v-cloak]{
+  display: none;
+}
+
   /* LARGE SCREENS */
   @media (min-width: 700px) {
     .wrapper {
@@ -149,3 +153,13 @@
     }
   }
   
+  
+@media (max-width: 600px){
+  .media{
+    display: flex;
+    flex-direction: column !important;
+  }
+  .largo-inputs{
+    width: 100% !important;
+  }
+}

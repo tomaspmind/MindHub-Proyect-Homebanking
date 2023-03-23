@@ -13,40 +13,116 @@
     </head>
 <body>
 
-    <div id="app">
+    <div id="app" style="background: #00000047;">
       <div class="d-flex flex-column justify-content-center align-items-center">
-      <div class="p-4 titulos">
-        <img src="./images/logo-mindhub-sinfondo.png" alt="" class="" style="height: 8rem; width: 8rem;">
-        <h1 class="text-center">Welcome to Mindhub-Bank!</h1>
-        <h3 class="text-center letrachica">Here you can Login for see information, create accounts, transaccions and cards.</h3>
-      </div>
-
-      <div class="container">
-        <div class="login">Click here for Log in</div>
-        <div class="signup">Click here for Register</div>
-        <div class="login-form">
-          <input v-model="email" type="email" placeholder="Email" class="input"><br>
-          <input v-model="password" type="password" placeholder="Password" class="input"><br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <button class="btn" type="submit" v-on:click="login"> Log in </button>
-          
-          
-        </div>
-        <div class="signup-form">
-          <input v-model="firstName" type="text" placeholder="First Name" class="input"><br>
-          <input v-model="lastName" type="text" placeholder="Last Name" class="input"><br>
-          <input v-model="email" type="email" placeholder="Email" class="input"><br>
-          <input v-model="password" type="password" placeholder="Password" class="input"><br>
-          <button class="btn" type="submit" v-on:click="register"> Register </button>
+        <div class="p-4 titulos">
+          <img src="./images/logo-mindhub-sinfondo.png" alt="" class="" style="height: 8rem; width: 8rem;">
+          <h1 class="text-center">Welcome to Mindhub-Bank!</h1>
+          <h3 class="text-center letrachica">Here you can Login for see information, create accounts, transaccions and cards.</h3>
         </div>
       </div>
-    </div>
+      <div class="d-flex justify-content-evenly flex-wrap mt-1">
+        <div class="gap-2 titulos informacion">
+          
+          <h4 class="text-center letrachica mb-5">Information:</h4>
+          <p>A bank is a financial institution that offers a wide range of financial services, from checking and savings accounts to loans and credit cards. These services can be useful for both individuals and companies that need to manage their finances.</p>
+          <p>At a bank, you can do a variety of transactions, such as depositing and withdrawing cash, transferring funds to other accounts, paying bills, and applying for loans. In addition, banks offer investment products such as certificates of deposit, mutual funds, and retirement plans.</p>
+          <p>When it comes to choosing a bank, it is important to consider several factors. First of all, it is essential to look for a bank that offers financial services that are adapted to your needs. It is also important to consider the location of the bank and its accessibility, since a nearby bank may be more convenient for transactions.</p>
+          <p>In addition, it is important to consider the fees and charges that the bank charges for its services. Some banks offer free accounts with no monthly fees, while others may have higher fees. It is also important to consider the interest rates offered by the bank, especially if you are looking to invest or apply for loans.</p>
+        </div>
+        <div class="container form-extra">
+          <div class="login">Click here for Log in</div>
+          <div class="signup">Click here for Register</div>
+          <div class="login-form">
+            <input v-model="email" type="email" placeholder="Email" class="input"><br>
+            <input v-model="password" type="password" placeholder="Password" class="input"><br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <button class="btn" type="submit" v-on:click="login"> Log in </button>
+            
+            
+          </div>
+          <div class="signup-form">
+            <input v-model="firstName" type="text" placeholder="First Name" class="input"><br>
+            <input v-model="lastName" type="text" placeholder="Last Name" class="input"><br>
+            <input v-model="email" type="email" placeholder="Email" class="input"><br>
+            <input v-model="password" type="password" placeholder="Password" class="input"><br>
+            <button class="btn" type="submit" v-on:click="register"> Register </button>
+          </div>
+        </div>
+      </div>
   </div>
+  <footer class="text-center">
+    <div class="footer-above">
+        <div class="contaner-propio">
+            <div class="row">
+                <div class="footer-col col-md-4">
+                    <h3>Location</h3>
+                    <p class="hover-falso">8093 Schaden Ridge Apt. 849<br>Kentucky</p>
+                    <p class="otro-color">If you want to know where we are, here you can see the address, we hope to see you soon.</p>
+                </div>
+                <div class="footer-col col-md-4">
+                    <h3>Around the Web</h3>
+                    <ul class="list-inline d-flex justify-content-evenly">
+                        <li>
+                            <a href="https://www.facebook.com/" target="_blank" class="btn-social btn-outline" alt="Behance" title="Behance">
+                              <i class="bi bi-facebook"></i>
+                                
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/" target="_blank" class="btn-social btn-outline" alt="Codepen" title="Codepen">
+                              <i class="bi bi-instagram"></i>
+                                
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/" target="_blank" class="btn-social btn-outline" 
+                            alt="Twitter" title="Twitter">
+                            <i class="bi bi-twitter"></i>
+                                
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="otro-color">If you want to see our facilities and follow us on our networks, click on the icons!</p>
+                </div>
+                <div class="footer-col col-md-4">
+                    <h3>Contact Info</h3>
+                    <ul class="list-inline d-flex justify-content-evenly">
+                        <li>
+                            <a href="tel: +1.443.743.6471" class="btn-social btn-outline text-decoration-none">
+                            <i class="bi bi-telephone-fill"></i><br>
+                                <!-- <span class="sr-only">Phone</span> -->
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:mindhub_bank@gmail.com" class="btn-social btn-outline text-decoration-none">
+                            <i class="bi bi-envelope-fill"></i><br>
+                                <!-- <span class="sr-only">Email</span> -->
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="otro-color">If you want to ask, please use the contact telephone number or this E-mail.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-below">
+        <div class="contaner-propio">
+            <div class="row">
+                <div class="col-lg-12">
+                    Proyect created by <a href="https://github.com/tomaspmind?tab=repositories" target="_blank" class="text-light">Tomas Perez</a>
+                    <br>
+                    Copyright &copy; COHORT 41
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

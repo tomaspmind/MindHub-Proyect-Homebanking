@@ -9,7 +9,8 @@ createApp({
         cuentaDestino2: '',
         amount: '',
         description: '',
-        accounts: []
+        accounts: [],
+        newList: []
         }
     },
 
@@ -68,6 +69,10 @@ createApp({
             this.tipoTransferencia = ''
             this.amount = ''
             this.description = ''
+        },
+        changed(){
+            this.newList = this.accounts.filter(element => element.number !== this.cuentaDestino)
+            return this.newList
         }
 
     },

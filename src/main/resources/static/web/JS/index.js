@@ -9,7 +9,8 @@ createApp({
         firstName: '',
         lastName: '',
         registerError:"",
-        dataError: ""
+        dataError: "",
+        onlyName: ""
     }
 },
 created(){
@@ -23,13 +24,20 @@ created(){
                 }
             })
             .then(response => {
+                this.onlyName = this.email.split("@")[0]
                 Swal.fire({
-                    title: `Acepted (Codigo: 200)`,
+                    title: `Welcome ${this.onlyName} !`,
                     icon: "success",
                     showConfirmButton: false,
                     timer: 1500,
                     timerProgressBar: true,
-                    }).then(response => {location.href = '/web/accounts.html';})
+                    }).then(() => {
+                        if(this.email == "admin@mindhub.com"){
+                            location.href = "/web/admin.html";
+                        }else{
+                            location.href = '/web/accounts.html';
+                        }
+                    })
             })
             .catch(error => {
                 this.error = error.response.data;

@@ -7,13 +7,9 @@ import com.mindhub.homebanking.models.Loan;
 public class ClientLoanDTO {
 
     private long id;
-
     private Double amount;
-
     private Integer payments;
-
     private String name;
-
     private long loans;
 
     public ClientLoanDTO(){}

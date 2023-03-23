@@ -4,49 +4,46 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.*;
+import com.mindhub.homebanking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.mindhub.homebanking.extras.Extras.currentBalanceCredit;
-import static com.mindhub.homebanking.extras.Extras.loanFess;
+import static com.mindhub.homebanking.utils.Utils.currentBalanceCredit;
+import static com.mindhub.homebanking.utils.Utils.loanFess;
 
 @RestController
 public class LoanController {
 
     @Autowired
-    ClientRepository clientRepository;
+    ClientService clientService;
 
     @Autowired
-    LoanRepository loanRepository;
+    LoanService loanService;
 
     @Autowired
-    AccountRepository accountRepository;
+    AccountService accountService;
 
     @Autowired
-    TransactionRepository transactionRepository;
+    TransactionService transactionService;
 
     @Autowired
-    ClientLoanRepository clientLoanRepository;
+    ClientLoanService clientLoanService;
 
-    @RequestMapping("/api/loans")
+    @GetMapping("/api/loans")
     public List<LoanDTO> getLoans(){
-        return loanRepository.findAll().stream().map(loan -> new LoanDTO(loan)).collect(Collectors.toList());
+        return loanService.findAll().stream().map(loan -> new LoanDTO(loan)).collect(Collectors.toList());
     }
 
     @Transactional
-    @RequestMapping(path = "/api/loans", method = RequestMethod.POST)
+    @PostMapping("/api/loans")
     public ResponseEntity<Object> newLoan (@RequestBody(required = false) LoanApplicationDTO loanApplicationDTO, Authentication authentication){
 
         Long id = loanApplicationDTO.getId();
@@ -54,9 +51,9 @@ public class LoanController {
         Integer payments = loanApplicationDTO.getPayments();
         String accountNumber = loanApplicationDTO.getAccountNumber();
 
-        Client clientAutenticado = clientRepository.findByEmail(authentication.getName());
-        Account accountDestino = accountRepository.findByNumber(accountNumber);
-        Loan typeLoan = loanRepository.getReferenceById(id);
+        Client clientAutenticado = clientService.findByEmail(authentication.getName());
+        Account accountDestino = accountService.findByNumber(accountNumber);
+        Loan typeLoan = loanService.getReferenceById(id);
 
         if (id == null || id <= 0){
             return new ResponseEntity<>("Loan id is Empty",HttpStatus.FORBIDDEN);
@@ -85,18 +82,39 @@ public class LoanController {
         if (!clientAutenticado.getAccounts().contains(accountDestino)){
             return new ResponseEntity<>("The account Destiny is not your account",HttpStatus.FORBIDDEN);
         }
+        if (clientAutenticado.getClientLoans().stream().anyMatch(clientLoan -> clientLoan.getLoan() == typeLoan)){
+            return new ResponseEntity<>("You cannot have another similar loan",HttpStatus.BAD_REQUEST);
+        }
 
         ClientLoan clientLoan = new ClientLoan(loanFess(amount,typeLoan), payments, clientAutenticado,typeLoan);
-        Transaction loanTransaction = new Transaction(TransactionType.CREDIT,amount,typeLoan.getName()+" Loan approve", LocalDateTime.now(),currentBalanceCredit(accountRepository,accountDestino,amount));
+        Transaction loanTransaction = new Transaction(TransactionType.CREDIT,amount,typeLoan.getName()+" Loan approve", LocalDateTime.now(),currentBalanceCredit(accountService,accountDestino,amount));
 
         typeLoan.addLoans(clientLoan);
         accountDestino.addTransaction(loanTransaction);
         accountDestino.setBalance(accountDestino.getBalance()+amount);
 
-        transactionRepository.save(loanTransaction);
-        clientLoanRepository.save(clientLoan);
+        transactionService.save(loanTransaction);
+        clientLoanService.save(clientLoan);
 
         return new ResponseEntity<>("Loan accepted", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/api/admin/loans")
+    public ResponseEntity<Object> createLoans(@RequestBody Loan loan){
+
+        String name = loan.getName();
+        int maxAmount = loan.getMaxAmount();
+        List<Integer> payment = loan.getPayment();
+        Double fee = loan.getFee();
+        List<Double> feePayments = loan.getFeePayments();
+        Boolean show = true;
+
+        Loan loans = new Loan(name,maxAmount,payment,fee,feePayments,show);
+
+        loanService.save(loans);
+
+        return new ResponseEntity<>("Created",HttpStatus.CREATED);
+
     }
 
 }

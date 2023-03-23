@@ -23,6 +23,8 @@ public class Loan {
     private int maxAmount;
 
     private Double fee;
+
+    private Boolean showLoan;
     @ElementCollection
     @Column (name = "payment_fee")
     private List<Double> feePayments = new ArrayList<>();
@@ -36,13 +38,17 @@ public class Loan {
 
     public Loan(){}
 
-    public Loan(String name, int maxAmount, List<Integer> payment, Double fee, List<Double> feePayments) {
+    public Loan(String name, int maxAmount, List<Integer> payment, Double fee, List<Double> feePayments, Boolean showLoan) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payment = payment;
         this.fee = fee;
         this.feePayments = feePayments;
+        this.showLoan = showLoan;
     }
+
+
+
 
     public void addClientLoan(ClientLoan clientLoan){
         clientLoan.setLoan(this);
@@ -107,5 +113,13 @@ public class Loan {
 
     public void setFeePayments(List<Double> feePayments) {
         this.feePayments = feePayments;
+    }
+
+    public Boolean getShowLoan() {
+        return showLoan;
+    }
+
+    public void setShowLoan(Boolean showLoan) {
+        this.showLoan = showLoan;
     }
 }

@@ -3,6 +3,7 @@ package com.mindhub.homebanking.configurations;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.ClientRepository;
 
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +21,7 @@ import java.util.Objects;
 public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
     @Autowired
-    private ClientRepository clientRepository;
+    ClientService clientService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -32,7 +33,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
         auth.userDetailsService(inputName-> {
 
-            Client client = clientRepository.findByEmail(inputName);
+            Client client = clientService.findByEmail(inputName);
 
             if (client != null) {
 

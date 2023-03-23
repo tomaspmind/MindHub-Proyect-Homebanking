@@ -12,128 +12,131 @@
         <title>Creat Card</title>
     </head>
 <body>
-    <div id="app">
+    <main id="app">
+        <div class="container">
+          <div class="d-flex gap-3 align-items-center">
+            <h1 class="brand text-light">MindHub Bank</h1>
+            <img src="./images/logo-mindhub-sinfondo.png" alt="" style="height: 6.5rem; width: 6.5rem;">
+          </div>
+            <div class="wrapper animated bounceInLeft">
+              <div class="company-info" v-if="cardType.length == 0" v-cloak>
+                <h4>Why you want to take a card?</h4>
+                <p class="letraMasChica">It is important that you carefully consider the benefits and disadvantages before making a decision.</p>
+                
+                <ul class="letraMasChica">
+                  <li class="d-flex text-start">1. Convenience and security: Cards are a convenient and secure way to make payments.</li>
+                  <li class="d-flex text-start">2. Payment flexibility: If you opt for a credit card, you will have the option of paying for your purchases in monthly installments.</li>
+                  <li class="d-flex text-start">3. Build credit: If you are a responsible credit card user, you can improve your credit history.</li>
+                  <li class="d-flex text-start">4. Rewards and benefits: Some cards offer rewards programs that allow you to accumulate points, airline miles or other types of benefits.</li>
+                  <li class="d-flex text-start">5. Emergencies and unexpected situations: If an emergency arises and you need money quickly, a credit or debit card may be a good option.</li>
+                </ul>
+                
+                <p class="letraMasChica">However, it is important to note that cards can also have drawbacks. If you are not a responsible user, you can accumulate debts and have financial problems. Also, some cards may have hidden fees and charges, which can affect your finances in the long run.</p>
+              </div>
 
-        <!-- <nav class="navbar navbar-default sticky-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                    <i class="glyphicon glyphicon-align-left"></i>
-                    <span><i class="bi bi-arrow-left-right"></i></span>
-                    </button>
-                </div>
-                <div class="d-flex gap-3">
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle nada" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{client.firstName}} {{client.lastName}} <i class="bi bi-person-fill"></i></a>
-                        <ul class="dropdown-menu nada">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-fill"></i> User profile</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-vcard"></i> User information</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-shield-lock"></i> Segurity</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a @click="logout" class="dropdown-item" href="#"><i class="bi bi-power"></i> Disconect</a></li>
-                        </ul>
-                    </div>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i style="color: black;" class="bi bi-calculator-fill"></i></a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i style="color: black;" class="bi bi-calendar3"></i></a>
-                    <a href="#"><i style="color: black;" class="bi bi-bell"></i></a>
-                </div>
-            </div>
-        </nav> -->
+              <div class="company-info" v-if="cardType == 'CREDIT'" v-cloak>
+                <h4>Info of Credit cards:</h4>
+                <p class="letraMasChica">It is important that you carefully consider the benefits and disadvantages before making a decision.</p>
+                
+                <h5>Benefits:</h5>
+                <ul class="letraMasChica">
+                  <li class="d-flex text-start">1. Payment flexibility: with a credit card you can buy what you need without having to pay the entire amount at once.</li>
+                  <li class="d-flex text-start">2. Security: a credit card is safer than carrying cash.</li>
+                  <li class="d-flex text-start">3. Rewards: some credit cards offer rewards programs for every purchase you make, such as points, airline miles, restaurant discounts, among other benefits.</li>
+                  <li class="d-flex text-start">4. Protection on purchases: credit cards can offer additional protection on your purchases, such as extended warranties, protection against fraud, among others.</li>
+                </ul>
+                <h5>Disadvantages:</h5>
+                <ul class="letraMasChica">
+                  <li class="d-flex text-start">1. Interest: If you do not pay your balance in full each month, you will have to pay interest that can be high and increase your debt.</li>
+                  <li class="d-flex text-start">2. Fees: Some credit cards have annual fees, overdraft fees, late fees, among other costs.</li>
+                  <li class="d-flex text-start">3. Temptation to Spend Unnecessarily: With a credit card, you may be tempted to spend more than you really need, which can lead to hard-to-pay debt.</li>
+                  <li class="d-flex text-start">4.Damage to credit history: If you don't pay your credit cards on time, it can negatively affect your credit history and reduce your chances of obtaining loans in the future.</li>
+                </ul>
+              </div>
 
-    <form @submit.prevent>
-        <fieldset>
-            <legend>
-                Your Details
-            </legend>
-            <div class="form-row">
-                <div class="form-control">
-                    <div class="float-label">
-                        <input placeholder="First Name" type="text" id="first-name" >
-                        <label for="first-name"></label>
+              <div class="company-info" v-if="cardType == 'DEBIT'" v-cloak>
+                <h4>Info of Debit cards:</h4>
+                <p class="letraMasChica">It is important that you carefully consider the benefits and disadvantages before making a decision.</p>
+                
+                <h5>Benefits:</h5>
+                <ul class="letraMasChica">
+                  <li class="d-flex text-start">1. Control spending: A debit card allows you to spend only what you have in your account, which can help you keep a controlled budget.</li>
+                  <li class="d-flex text-start">2. There is no interest: There is no interest to pay with a debit card, since you can only spend what you have available in your account.</li>
+                  <li class="d-flex text-start">3. Increased acceptance: Debit cards are widely accepted in physical stores and online, making them convenient to buy what you need.</li>
+                  <li class="d-flex text-start">4. Security: debit cards are also safe, since if you lose your card or it is stolen, you can report it immediately and the financial institution will take care of blocking it and issuing a new one.</li>
+                </ul>
+                <h5>Disadvantages:</h5>
+                <ul class="letraMasChica">
+                  <li class="d-flex text-start">1.Limited Purchase Protection: Debit cards do not offer the same protection as credit cards in case of fraudulent purchases or disputes with merchants.</li>
+                  <li class="d-flex text-start">2. Spending limits: Some banks may have daily spending limits on debit cards, which can be inconvenient if you need to make large purchases.</li>
+                  <li class="d-flex text-start">3. Fewer rewards and benefits: Unlike credit cards, debit cards don't typically offer rewards or benefit programs.</li>
+                  <li class="d-flex text-start">4. Additional fees and charges: If you're not careful, you can rack up additional fees and charges with a debit card.</li>
+                </ul>
+              </div>
+
+
+
+              <div class="contact d-flex flex-column justify-content-evenly">
+                <h3>You can request a Card here!</h3>
+                <div class="d-flex flex-column">
+                  <form @submit.prevent="loadAccounts">
+                    <div class="w-100 d-flex justify-content-between flex-wrap media">
+
+                    <div class="largo-inputs">
+                        <label for="tipoTransferencia">Card type:</label>
+                        <select id="tipoTransferencia" v-model="cardType" class="select-input">
+                          <option value="" disabled selected>Select Type</option>
+                          <option value="DEBIT">DEBIT</option>
+                          <option value="CREDIT">CREDIT</option>
+                        </select>
                     </div>
-                </div>
-                <div class="form-control">
-                    <div class="float-label">
-                        <input placeholder="Last Name" type="text" id="last-name" >
-                        <label for="last-name"></label>
+                  
+                  
+                    <div class="largo-inputs">
+                      <label for="cuentaDestino" class="paddingSimple">Select Payment:</label>
+                      <select id="cuentaDestino" v-model="colorType" class="select-input">
+                          <option value="" disabled selected>Select one payment</option>
+                          <option value="SILVER">SILVER</option>
+                          <option value="GOLD">GOLD</option>
+                          <option value="TITANIUM">TITANIUM</option>
+                      </select>
                     </div>
+                  
                 </div>
+                <div class="w-100 d-flex justify-content-between flex-wrap media">
+                  <div class="largo-inputs">
+                      <label for="adress">Street Address:</label>
+                      <input type="text" id="adress" placeholder="Here you can write the Address" v-model="clientAddres">
+                  </div>
+                  <div class="largo-inputs">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" placeholder="Here you can write the City" v-model="clientCity">
+                  </div>
+                </div>
+                <div class="w-100 d-flex justify-content-between flex-wrap media">
+                  <div class="largo-inputs">
+                    <label for="state">State:</label>
+                    <input type="text" id="state" placeholder="Here you can write the State" v-model="clientState">
+                  </div>
+                  <div class="largo-inputs">
+                    <label for="postal">Postal code:</label>
+                    <input type="text" id="postal" placeholder="Here you can write the Postal code" v-model="clientPostal">
+                  </div>
+                </div>
+                  
+                  <div class="d-flex gap-1 media">
+                      <button type="submit" @click="createCard">Click to create the Card</button>
+                      <button type="submit" @click="cleanForm">Clean Form</button>
+                  </div>
+                  <div>
+                    <a href="./accounts.html" class="boton-a">Back</a>
+                  </div>
+                  </form>
+              </div>
+              </div>
             </div>
-            <div class="form-row">
-                <div class="form-control">
-                    <div class="float-label">
-                        <input placeholder="Street Address" type="text" id="street-address">
-                        <label for="street-address">Street Address</label>
-                    </div>
-                </div>
-                <div class="form-control">
-                    <div class="float-label">
-                        <input placeholder="City" type="text" id="city">
-                        <label for="city">City</label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-control">
-                    <div class="float-label">
-                        <input placeholder="State" type="text" id="state">
-                        <label for="state">State</label>
-                    </div>
-                </div>
-                <div class="form-control">
-                    <div class="float-label">
-                        <input placeholder="Postal Code" type="text" id="zip">
-                        <label for="zip">Postal Code</label>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>
-                Credit Card Details
-            </legend>
-            <!-- <div class="form-row">
-                <div class="form-control">
-                    <div class="float-label">
-                        <input placeholder="Credit Card Number" type="text" id="cc-num">
-                        <label for="cc-num">Credit Card Number</label>
-                    </div>
-                </div>
-                <div class="form-control">
-                    <div class="float-label">
-                        <input placeholder="CVV" type="text" id="cvv">
-                        <label for="cvv">CVV</label>
-                    </div>
-                </div>
-            </div> -->
-            <div class="form-row">
-                <div class="form-control">
-                    <select v-model="cardType" class="form-select">
-                        <option value="DEBIT">DEBIT</option>
-                        <option value="CREDIT">CREDIT</option>
-                    </select>
-                </div>
-                <div class="form-control">
-                    <select v-model="colorType" class="form-select">
-                        <option value="SILVER">SILVER</option>
-                        <option value="GOLD">GOLD</option>
-                        <option value="TITANIUM">TITANIUM</option>
-                    </select>
-                </div>
-            </div>
-            <br>
-            <div class="form-control">
-                <div class="float-label d-flex justify-content-evenly">
-                    <button @click="createCard" class="btn btn-danger">Create</button>
-                    <a class="btn btn-danger" href="./cards.html">Back</a>
-                </div>
-            </div>
-            <br>
-    
-        </fieldset>
-    </form>
-</div>
+          </div>
+    </main>
 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

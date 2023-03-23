@@ -1,32 +1,18 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.rest.webmvc.json.JacksonMappingAwareSortTranslator;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static com.mindhub.homebanking.extras.Extras.cvv;
-import static com.mindhub.homebanking.extras.Extras.numbers;
 
 @SpringBootApplication
 public class HomebankingApplication {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	/*@Autowired
+	private PasswordEncoder passwordEncoder;*/
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return (args) -> {
 
@@ -134,7 +120,7 @@ public class HomebankingApplication {
 			cardRepository.save(card4);
 
 		};
-	}
+	}*/
 
 
 }

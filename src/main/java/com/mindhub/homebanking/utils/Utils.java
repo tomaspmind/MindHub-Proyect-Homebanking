@@ -1,25 +1,25 @@
-package com.mindhub.homebanking.extras;
+package com.mindhub.homebanking.utils;
 
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Loan;
 import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.LoanRepository;
+import com.mindhub.homebanking.repositories.CardRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.CardService;
 
-import java.util.List;
-
-public class Extras {
+public class Utils {
 
     public static String genericNumber() {
         int Numbers = (int) (Math.random() * 99999999);
         String fullNumber = String.format("VIN%08d",Numbers);
         return fullNumber;
     }
-    public static String number(AccountRepository accountRepository){
+    public static String number(AccountService accountService){
         String Number;
         boolean verifyNumber;
         do {
             Number=genericNumber();
-            verifyNumber=accountRepository.existsByNumber(Number);
+            verifyNumber=accountService.existsByNumber(Number);
         }while(verifyNumber);
         return Number;
     }
@@ -46,12 +46,22 @@ public class Extras {
         return numbers;
     }
 
-    public static Double currentBalanceCredit(AccountRepository accountRepository, Account account, double amount){
-        Double getCurrentAmount = accountRepository.findByNumber(account.getNumber()).getBalance() + amount;
+    public static String noDuplicatedNumberCard(CardService cardService){
+        String Number;
+        boolean verifityNumber;
+        do {
+            Number = numbers();
+            verifityNumber = cardService.existsByNumber(Number);
+        }while (verifityNumber);
+        return Number;
+    }
+
+    public static Double currentBalanceCredit(AccountService accountService, Account account, double amount){
+        Double getCurrentAmount = accountService.findByNumber(account.getNumber()).getBalance() + amount;
         return getCurrentAmount;
     }
-    public static Double currentBalanceDebit(AccountRepository accountRepository, Account account, double amount){
-        Double getCurrentAmount = accountRepository.findByNumber(account.getNumber()).getBalance() - amount;
+    public static Double currentBalanceDebit(AccountService accountService, Account account, double amount){
+        Double getCurrentAmount = accountService.findByNumber(account.getNumber()).getBalance() - amount;
         return getCurrentAmount;
     }
 

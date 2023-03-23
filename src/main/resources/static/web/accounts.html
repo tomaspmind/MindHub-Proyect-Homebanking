@@ -96,9 +96,9 @@
                     <button class="btn custom-boton" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <i class="bi bi-cash-coin"></i> Loans
                     </button>
-                    <div style="background-color: #6D0B0B;">
+                    <div style="background-color: #78A1BB;">
                         <div class="collapse" id="collapseExample" v-for="loan of dataLoans" v-if="dataLoans.length > 0">
-                            <a href="#loans">{{loan.name}}</a>
+                            <a href="#loans" v-cloak>{{loan.name}}</a>
                         </div>
                         <div class="collapse" id="collapseExample" v-else>
                             <p>You have no Loans</p>
@@ -111,7 +111,7 @@
                 <li>
                 <a href="./loan-application.html"><i class="bi bi-cash"></i> Apply Loan</a>
                 </li>
-                <li>
+                <!-- <li>
                 <a href="#"><i class="bi bi-currency-bitcoin"></i>Cryptos</a>
                 </li>
                 <li>
@@ -119,7 +119,7 @@
                 </li>
                 <li>
                 <a href="#"><i class="bi bi-mortarboard"></i> Information</a>
-                </li>
+                </li> -->
             </ul>
             <!-- <ul class="list-unstyled CTAs">
                 <li><a href="#" class="article" data-bs-toggle="modal" data-bs-target="#exampleModal3"><i class="bi bi-exclamation-triangle"></i> Reports</a></li>
@@ -169,40 +169,43 @@
                     </div>
                     <div class="d-flex gap-3">
                         <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle nada" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{client.firstName}} {{client.lastName}} <i class="bi bi-person-fill"></i></a>
+                            <a class="nav-link dropdown-toggle nada" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" v-cloak>{{client.firstName}} {{client.lastName}} <i class="bi bi-person-fill"></i></a>
                             <ul class="dropdown-menu nada">
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-person-fill"></i> User profile</a></li>
+                                <!-- <li><a class="dropdown-item" href="#"><i class="bi bi-person-fill"></i> User profile</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-person-vcard"></i> User information</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="bi bi-shield-lock"></i> Segurity</a></li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-shield-lock"></i> Segurity</a></li> -->
+                                <!-- <li><hr class="dropdown-divider"></li> -->
                                 <li><a @click="alertLogout" class="dropdown-item" href="#"><i class="bi bi-power"></i> Disconect</a></li>
                             </ul>
                         </div>
                         <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><i style="color: black;" class="bi bi-calculator-fill"></i></a>
                         <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i style="color: black;" class="bi bi-calendar3"></i></a>
-                        <a href="#"><i style="color: black;" class="bi bi-bell"></i></a>
+                        <!-- <a href="#"><i style="color: black;" class="bi bi-bell"></i></a> -->
                     </div>
                 </div>
             </nav>
             <div class="card2 overlay">
                 <p class="fw-bold text-light letras">Balance total: </p>
-                <p class="text-center fs-1 fw-bold text-light letras"> {{totalBalance()}}</p>
+                <p class="text-center fs-1 fw-bold text-light letras" v-cloak> {{totalBalance()}}</p>
             </div>
             <div class="line"></div>
             <div class="cards2">
                 <div class="card2 text-light letras overlay" v-for="account of accounts" v-if="accounts.length > 0">
-                    <p class="fw-bold text-light letras">Balance: </p>
-                    <p class="text-center fs-2 fw-bold text-light letras">{{account.balance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
+                    <div class="d-flex justify-content-between">
+                        <p class="fw-bold text-light letras">Balance: </p>
+                        <p class="fw-bold text-light letras" v-cloak>{{account.accountType}}</p>
+                    </div>
+                    <p class="text-center fs-2 fw-bold text-light letras" v-cloak>{{account.balance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</p>
                     <div class="d-flex flex-column text-center">
-                        <p class="letra text-center border-top border-1 text-light letras">Account: {{account.number}}</p>
+                        <p class="letra text-center border-top border-1 text-light letras" v-cloak>Account: {{account.number}}</p>
                         <div class="d-flex justify-content-evenly flex-column">
-                            <p class="letra text-center text-light letras">{{parseDate(account.creationDate)}}</p>
+                            <p class="letra text-center text-light letras" v-cloak>{{parseDate(account.creationDate)}}</p>
                             <a :href='"account.html?id="+account.id' style="color: white;" class="boton-inventado">Transactions</a>
                         </div>
                     </div>
                 </div>
-                <div v-else>
+                <div v-else v-cloak>
                     <h2>You have no Accounts</h2>
                 </div>
                 <!-- Modal -->
@@ -216,14 +219,14 @@
         <div class="modal-body">
             <div class="dentroModal">
                 <label for="tipoTransferencia">Account to Delete:</label>
-                <select id="tipoTransferencia" v-model="accountNumber">
+                <select id="tipoTransferencia" @change="changed" v-model="accountNumber" class="modal-edit">
                     <option value="" disabled selected>Select one option</option>
-                    <option v-for="account of accounts" :value="account.number">{{account.number}}</option>
+                    <option v-for="account of accounts" :value="account.number" v-cloak>{{account.number}}</option>
                 </select>
                 <label for="tipoTransferencia6">Account to transfer the restant balance:</label>
-                <select id="tipoTransferencia6" v-model="accountDestiny">
+                <select id="tipoTransferencia6" v-model="accountDestiny" class="modal-edit">
                     <option value="" disabled selected>Select one option</option>
-                    <option v-for="account of accounts" :value="account.number">{{account.number}}</option>
+                    <option v-for="account of newList" :value="account.number" v-cloak>{{account.number}}</option>
                 </select>
             </div>
         </div>
@@ -234,11 +237,44 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="exampleModal6" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Choose the options to delete</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="dentroModal">
+
+                <label for="createAccount">Why you gonna create a new account?</label>
+                <input type="text" name="" id="createAccount" placeholder="Put a short description here" class="modal-edit">
+
+                <label for="tipoDeAccount">Account type:</label>
+                <select id="tipoDeAccount" v-model="accountType" class="modal-edit">
+                    <option value="" disabled selected>Select one option</option>
+                    <option value="CHECKING">CHECKING ACCOUNT</option>
+                    <option value="SAVINGS">SAVINGS ACCOUNT</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+        <button @click="alertCreateAccount" type="button" class="btn btn-primary">Click here for Create</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
             </div>
             <div class="line"></div>
             <div class="d-flex justify-content-evenly flex-wrap gap-1">
                 
-                <button class="btn btn-danger botones-hover" @click="alertCreateAccount" v-if="accounts.length < 3">Create Account</button>
+                <!-- <button class="btn btn-danger botones-hover" @click="alertCreateAccount" v-if="accounts.length < 3">Create Account</button> -->
+
+                <button v-if="accounts.length < 3" type="button" class="btn btn-primary botones-hover" data-bs-toggle="modal" data-bs-target="#exampleModal6">Here you can Create an Account</button>
                 
                 <button v-if="accounts.length >= 2" type="button" class="btn btn-primary botones-hover" data-bs-toggle="modal" data-bs-target="#exampleModal5">Here you can delete an Account</button>
             </div>
@@ -248,31 +284,31 @@
                     <tr>
                         <th class="fw-semibold text-center border-1 border border-dark text-light p-2" colspan="12" style="background-color: #6D0B0B;">Last Transactions</th>
                     </tr>
-                    <tr class="border-bottom border-1 border-dark" style="height: 40px;">
-                        <th class="desaparecer"><label for=""><input type="checkbox" onclick="marcar(this)"></label></th>
-                        <th class="fw-semibold letra-mas-chica" style="width: 3%;">Nº</th>
-                        <th class="fw-semibold letra-mas-chica">Day</th>
-                        <th class="fw-semibold letra-mas-chica">Type</th>
-                        <th class="fw-semibold letra-mas-chica">Description</th>
-                        <th class="fw-semibold letra-mas-chica">Amount</th>
-                        <th class="fw-semibold desaparecer">Hour</th>
-                        <th class="fw-semibold desaparecer">Balance</th>
+                    <tr class="border-bottom border-2 border-dark letra-transactions " style="height: 40px;">
+                        <th class=" letra-transactions desaparecer"><label for=""><input type="checkbox" onclick="marcar(this)"></label></th>
+                        <th class=" letra-transactions fw-semibold letra-mas-chica" style="width: 3%;">Nº</th>
+                        <th class=" letra-transactions fw-semibold letra-mas-chica">Day</th>
+                        <th class=" letra-transactions fw-semibold letra-mas-chica">Type</th>
+                        <th class=" letra-transactions fw-semibold letra-mas-chica">Description</th>
+                        <th class=" letra-transactions fw-semibold letra-mas-chica">Amount</th>
+                        <th class=" letra-transactions fw-semibold desaparecer">Hour</th>
+                        <th class=" letra-transactions fw-semibold desaparecer">Balance</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="transaction of all_transactions.slice(0,4)" class="border-bottom border-1 tabla-hover" v-if="all_transactions.length > 0">
-                        <td class="desaparecer"><label><input type="checkbox" name={{transaction.id}}></label></td>
-                        <td>{{transaction.id}}</td>
-                        <td class=" letra-mas-chica">{{parseDate(transaction.date)}}</td>
-                        <td class=" d-flex flechas" v-if="transaction.type == 'CREDIT'"><p class="desaparecer" style="color: green;">{{transaction.type}}</p><p><i style="color: green;" class="bi bi-arrow-up"></i></p></td>
-                        <td class=" d-flex flechas" v-else><p class="desaparecer" style="color: red;">{{transaction.type}}</p><p><i style="color: red;" class="bi bi-arrow-down"></i></p></td>
-                        <td class=" letra-mas-chica">{{transaction.description}}</td>
-                        <td class=" ">{{transaction.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
-                        <td class=" desaparecer">{{justHour(transaction.date)}}</td>
-                        <td class=" desaparecer">{{transaction.showCurrentBalance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
+                    <tr v-for="transaction of all_transactions.slice(0,4)" class="border-bottom border-1 tabla-hover letra-transactions" v-if="all_transactions.length > 0">
+                        <td v-cloak class="desaparecer letra-transactions"><label><input type="checkbox" name={{transaction.id}}></label></td>
+                        <td v-cloak >{{transaction.id}}</td>
+                        <td v-cloak class=" letra-mas-chica letra-transactions">{{parseDate(transaction.date)}}</td>
+                        <td v-cloak class=" d-flex flechas letra-transactions justify-content-center" v-if="transaction.type == 'CREDIT'"><p class="desaparecer marginCero" style="color: green; text-shadow: 1px 1px 1px white;" v-cloak>{{transaction.type}}</p><p class="marginCero" v-cloak><i style="color: green;" class="bi bi-arrow-up"></i></p></td>
+                        <td v-cloak class=" d-flex flechas letra-transactions justify-content-center" v-else><p class="desaparecer marginCero" style="color: red;" v-cloak>{{transaction.type}}</p><p class="marginCero" v-cloak><i style="color: red;" class="bi bi-arrow-down"></i></p></td>
+                        <td v-cloak class=" letra-mas-chica letra-transactions">{{transaction.description}}</td>
+                        <td v-cloak class="  letra-transactions">{{transaction.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
+                        <td v-cloak class=" desaparecer letra-transactions">{{justHour(transaction.date)}}</td>
+                        <td v-cloak class=" desaparecer letra-transactions">{{transaction.showCurrentBalance.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
                     </tr>
                     <tr v-else>
-                        <td colspan="7" class="text-center text-dark"><br> <p class="fw-bold text-dark fs-4"> You have no transactions.</p> Here you can see details of your transactions when you have them, such as the time, the amount, the type of transaction, etc. <br> 
+                        <td colspan="7" class="text-center text-dark"><br> <p class="fw-bold text-dark fs-4" v-cloak> You have no transactions.</p> Here you can see details of your transactions when you have them, such as the time, the amount, the type of transaction, etc. <br> 
                             You can make a transfer with the "Do a Transfer" button that is in the sidebar.</td>
                     </tr>
                 </tbody>
@@ -281,30 +317,97 @@
             <table class="table">
                 <thead>
             <tr>
-                <th id="loans" class="fw-semibold text-center border-1 border border-dark text-light p-2" colspan="4" style="background-color: #6D0B0B;">Your Loans {{client.firstName}} {{client.lastName}}</th>
+                <th id="loans" class="fw-semibold text-center border-1 border border-dark text-light p-2" colspan="4" style="background-color: #6D0B0B;" v-cloak>Your Loans {{client.firstName}} {{client.lastName}}</th>
             </tr>
-            <tr class="border-bottom border-1 border-dark" style="height: 40px;">
-                <th>Name</th>
-                <th>Amount</th>
-                <th>Payments</th>
+            <tr class="border-bottom border-2 border-dark letra-transactions" style="height: 40px;">
+                <th class="letra-transactions">Name</th>
+                <th class="letra-transactions">Amount</th>
+                <th class="letra-transactions">Payments</th>
                 <!-- <th></th> -->
             </tr>
         </thead>
         <tbody>
-            <tr v-for="loan of dataLoans" v-if="dataLoans.length > 0">
-                <td>{{loan.name}}</td>
-                <td>$ {{loan.amount}}</td>
-                <td>{{loan.payments}}</td>
+            <tr v-for="loan of dataLoans" v-if="dataLoans.length > 0" class="letra-transactions">
+                <td class="letra-transactions" v-cloak>{{loan.name}}</td>
+                <td class="letra-transactions" v-cloak>$ {{loan.amount}}</td>
+                <td class="letra-transactions" v-cloak>{{loan.payments}}</td>
                 <!-- <td><button class="">Pay Now</button></td> -->
             </tr>
             <tr v-else>
-                <td class="text-dark text-center" colspan="7"><br> <p class="fs-4 text-dark fw-bold">You have no Loans.</p>  Here you can see details of your loans, such as the amount requested, the type of loan and the number of installments requested. <br>
+                <td class="text-dark text-center" colspan="7"><br> <p class="fs-4 text-dark fw-bold" v-cloak>You have no Loans.</p>  Here you can see details of your loans, such as the amount requested, the type of loan and the number of installments requested. <br>
                     You can request one with the "Apply Loan" button in the sidebar.</td>
             </tr>
         </tbody>
         </table>
         <div class="line"></div>
         
+        <footer class="text-center">
+            <div class="footer-above">
+                <div class="contaner-propio">
+                    <div class="row">
+                        <div class="footer-col col-md-4">
+                            <h3>Location</h3>
+                            <p class="text-light hover-falso">8093 Schaden Ridge Apt. 849<br>Kentucky</p>
+                            <p>If you want to know where we are, here you can see the address, we hope to see you soon.</p>
+                        </div>
+                        <div class="footer-col col-md-4">
+                            <h3>Around the Web</h3>
+                            <ul class="list-inline d-flex justify-content-evenly">
+                                <li>
+                                    <a href="https://www.facebook.com/" target="_blank" class="btn-social btn-outline" alt="Behance" title="Behance">
+                                      <i class="bi bi-facebook"></i>
+                                        
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/" target="_blank" class="btn-social btn-outline" alt="Codepen" title="Codepen">
+                                      <i class="bi bi-instagram"></i>
+                                        
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/" target="_blank" class="btn-social btn-outline" 
+                                    alt="Twitter" title="Twitter">
+                                    <i class="bi bi-twitter"></i>
+                                        
+                                    </a>
+                                </li>
+                            </ul>
+                            <p>If you want to see our facilities and follow us on our networks, click on the icons!</p>
+                        </div>
+                        <div class="footer-col col-md-4">
+                            <h3>Contact Info</h3>
+                            <ul class="list-inline d-flex justify-content-evenly">
+                                <li>
+                                    <a href="tel: +1.443.743.6471" class="btn-social btn-outline">
+                                    <i class="bi bi-telephone-fill"></i><br>
+                                        <!-- <span class="sr-only">Phone</span> -->
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="mailto:mindhub_bank@gmail.com" class="btn-social btn-outline">
+                                    <i class="bi bi-envelope-fill"></i><br>
+                                        <!-- <span class="sr-only">Email</span> -->
+                                    </a>
+                                </li>
+                            </ul>
+                            <p>If you want to ask, please use the contact telephone number or this E-mail.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-below">
+                <div class="contaner-propio">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            Proyect created by <a href="https://github.com/tomaspmind?tab=repositories" target="_blank" class="text-light text-decoration-underline">Tomas Perez</a>
+                            <br>
+                            Copyright &copy; COHORT 41
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
             </div>
         </div>
     </main>

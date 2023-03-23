@@ -31,6 +31,7 @@ public class LoanDTO {
         this.feePayments = loan.getFeePayments();
     }
 
+
     public long getId() {
         return id;
     }

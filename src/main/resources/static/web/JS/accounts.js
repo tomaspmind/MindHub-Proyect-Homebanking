@@ -284,8 +284,9 @@ createApp({
             dataLoans: [],
             dataCards: [],
             accountNumber: "",
-            accountDestiny: ""
-            
+            accountDestiny: "",
+            accountType: "",
+            newList: []
         }
     },
 
@@ -336,7 +337,7 @@ createApp({
 
         logout(){
             axios.post('/api/logout').then(response =>  Swal.fire({
-              title: `Acepted (Codigo: 200)`,
+              title: `Have a good day ${this.client.firstName}`,
               icon: "success",
               showConfirmButton: false,
               timer: 1000,
@@ -346,9 +347,10 @@ createApp({
         },
 
         CreateNewAccount(){
-            axios.post('/api/clients/current/accounts')
+            axios.post('/api/clients/current/accounts', `accountType=${this.accountType}`)
             .then(response => {
                 this.loadData();
+                location.href = "/web/accounts.html"
             })
             .catch(error => {
                 this.error = error.response.data.message;
@@ -413,6 +415,10 @@ createApp({
             }
           })
         },
+        changed(){
+          this.newList = this.accounts.filter(element => element.number !== this.accountNumber)
+          return this.newList
+      }
     },
 
 }).mount('#app')

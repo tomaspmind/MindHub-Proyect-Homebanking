@@ -7,7 +7,11 @@ createApp({
             cardType: "",
             colorType: "",
             createdCardError:"",
-            dataError: ""
+            dataError: "",
+            clientAddres: "",
+            clientCity: "",
+            clientState: "",
+            clientPostal: ""
     }
 },
 created(){
@@ -29,8 +33,9 @@ created(){
                 }
             })
             .then(response => {
+
                 Swal.fire({
-                    title: `Acepted (Codigo: 200)`,
+                    title: `Acepted ${this.cardType} ${this.colorType}`,
                     icon: "success",
                     showConfirmButton: false,
                     timer: 2000,
@@ -49,6 +54,18 @@ created(){
             icon: "error",
             dangerMode: true,
             })
+        },
+        cleanForm(){
+            this.cardType = ""
+            this.colorType = ""
+            this.clientAddres = ""
+            this.clientCity = ""
+            this.clientState = ""
+            this.clientPostal = ""
+        },
+        changed(){
+            
+            
         },
     }
 }).mount('#app')

@@ -329,7 +329,7 @@
         <tbody>
             <tr v-for="loan of dataLoans" v-if="dataLoans.length > 0" class="letra-transactions">
                 <td class="letra-transactions" v-cloak>{{loan.name}}</td>
-                <td class="letra-transactions" v-cloak>$ {{loan.amount}}</td>
+                <td class="letra-transactions" v-cloak>$ {{loan.amount.toLocaleString('de-DE', { style: 'currency', currency: 'USD' })}}</td>
                 <td class="letra-transactions" v-cloak>{{loan.payments}}</td>
                 <!-- <td><button class="">Pay Now</button></td> -->
             </tr>

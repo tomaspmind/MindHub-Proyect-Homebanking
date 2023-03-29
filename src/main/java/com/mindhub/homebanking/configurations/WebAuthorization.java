@@ -45,7 +45,8 @@ public class WebAuthorization {
                 .antMatchers("/api/accounts/{id}").hasAuthority("CLIENT")
                 .antMatchers("/api/accounts").hasAuthority("ADMIN")
                 .antMatchers("/manager/**").hasAuthority("ADMIN")
-                .antMatchers("/web/**").hasAuthority("CLIENT");
+                .antMatchers("/web/**").hasAuthority("CLIENT")
+                .anyRequest().denyAll();
 
         http.formLogin()
 
@@ -55,7 +56,7 @@ public class WebAuthorization {
 
         http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
 
-        // turn off checking for CSRF tokens
+        // turn off checking for CSRF tokens, investigar que tipo de token es
 
         http.csrf().disable();
 
